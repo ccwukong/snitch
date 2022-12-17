@@ -1,0 +1,13 @@
+{
+  "postman_collection": {
+    "version": "",
+    "auth": {
+      "user_credential": {
+        "user": "",
+        "password": ""
+      },
+      "user_token": null
+    },
+    "file_path": ""
+  }
+}
