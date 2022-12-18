@@ -1,7 +1,7 @@
 import click
 import json
 from json.decoder import JSONDecodeError
-from src.parsers.postman_parser import postman_parse
+from src.parsers.postman_parser import PostmanFileParser
 from src.parsers.config_parser import ConfigParser
 
 
@@ -11,8 +11,11 @@ def run(path):
     try:
         with open(path, 'r') as f:
             config = ConfigParser(f.read())
-            print(config.postman_collection)
+            pp = PostmanFileParser(config.postman_collection_file_path)
+            print(pp.endpoints)
     except JSONDecodeError as e:
+        click.echo(e)
+    except FileNotFoundError as e:
         click.echo(e)
 
 

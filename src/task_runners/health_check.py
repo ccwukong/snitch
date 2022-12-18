@@ -1,2 +1,2 @@
-def run_health_check():
+def run_health_check(endpoints):
     pass

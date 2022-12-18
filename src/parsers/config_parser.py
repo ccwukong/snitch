@@ -4,7 +4,7 @@ from json.decoder import JSONDecodeError
 
 class ConfigParser:
     # It takes a json string as input during object instantiation
-    def __init__(self, data: str):
+    def __init__(self, data):
         self.__postman_collection = {}
         self.__openapi = {}
 
@@ -32,5 +32,13 @@ class ConfigParser:
             raise e
 
     @property
-    def postman_collection(self):
-        return self.__postman_collection
+    def api_key(self):
+        return self.__postman_collection.get('api_key', None)
+
+    @property
+    def access_token(self):
+        return self.__postman_collection.get('access_token', None)
+
+    @property
+    def postman_collection_file_path(self):
+        return self.__postman_collection.get('postman_collection_file_path', None)
