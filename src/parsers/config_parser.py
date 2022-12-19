@@ -25,7 +25,7 @@ class ConfigParser:
                     self.__postman_collection['user'] = config['postmanCollection']['auth']['userCredential']['user']
                     self.__postman_collection['password'] = config['postmanCollection']['auth']['userCredential']['password']
 
-                self.__postman_collection['postman_collection_file_path'] = config['postmanCollection']['collectionFilePath']
+                self.__postman_collection['collection_file_path'] = config['postmanCollection']['collectionFilePath']
 
             # TODO: add open api handler
         except JSONDecodeError as e:
@@ -40,5 +40,5 @@ class ConfigParser:
         return self.__postman_collection.get('access_token', None)
 
     @property
-    def postman_collection_file_path(self):
-        return self.__postman_collection.get('postman_collection_file_path', None)
+    def collection_file_path(self):
+        return self.__postman_collection.get('collection_file_path', None)

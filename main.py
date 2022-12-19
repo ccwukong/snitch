@@ -11,7 +11,7 @@ def run(path):
     try:
         with open(path, 'r') as f:
             config = ConfigParser(f.read())
-            pp = PostmanFileParser(config.postman_collection_file_path)
+            pp = PostmanFileParser(config.collection_file_path)
             print(pp.endpoints)
     except JSONDecodeError as e:
         click.echo(e)
