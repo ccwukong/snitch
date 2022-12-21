@@ -35,7 +35,7 @@ async def run(path):
     try:
         # reading config file and parse data sychronously, coz there's only 1 config file
         # needs to read
-        with open('./testdata/config.json', 'r') as f:
+        with open(path, 'r') as f:
             config = ConfigParser(f.read())
             if config.has_postman_collection:
                 pp = PostmanFileParser(
