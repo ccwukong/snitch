@@ -1,5 +1,5 @@
 # snitch
-snitch is a CLI tool that helps you do health check, API contract validation and load testing your microservices.
+snitch is a CLI tool that helps you do health check, API contract validation and load testing agaist your microservices.
 
 There's no tendancies to replace your existing testing tools, but rather provides a convenient way to check your microservices on demand.
 ## Main features
@@ -32,6 +32,6 @@ First, you need to have a global .json file which provides all essential configu
 
 Once you have the config JSON file ready, you can run this in your commandline prompt:
 ```console 
-python main.py -p ./your_config_json_file_path
+python main.py -p your_config_json_file_path
 
 ```
