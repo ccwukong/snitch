@@ -19,10 +19,12 @@ async def request(i):
 @click.option('-p', '--path', help='Path of the configuration file')
 async def run(path):
     try:
-        with open(path, 'r') as f:
+        with open('./testdata/config.json', 'r') as f:
             config = ConfigParser(f.read())
             if config.has_postman_collection:
-                pp = PostmanFileParser(config.collection_file_path)
+                pp = PostmanFileParser(
+                    config.collection_file_path, config.metadata)
+                print(pp.requests)
     except Exception as e:
         click.echo(e)
     # tasks = []

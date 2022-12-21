@@ -11,20 +11,8 @@ class ConfigParser:
         try:
             config = json.loads(data)
             if 'postmanCollection' in data:
-                # if access token exists is configured
-                if 'accessToken' in config['postmanCollection']['auth'] and \
-                        config['postmanCollection']['auth']['accessToken']:
-                    self.__postman_collection['access_token'] = config['postmanCollection']['auth']['accessToken']
-
-                # if user credentials exists is configured
-                if 'userCredential' in config['postmanCollection']['auth'] and \
-                        config['postmanCollection']['auth']['userCredential']:
-                    self.__postman_collection['user'] = config['postmanCollection']['auth']['userCredential']['user']
-                    self.__postman_collection['password'] = config['postmanCollection']['auth']['userCredential']['password']
-
                 self.__postman_collection['collection_file_path'] = config['postmanCollection']['collectionFilePath']
-                self.__postman_collection['restApiUrl'] = config['postmanCollection']['restApiUrlPrefix']
-                self.__postman_collection['header'] = config['postmanCollection']['header']
+                self.__postman_collection['metadata'] = config['postmanCollection']['metadata']
 
             # TODO: add open api handler
         except JSONDecodeError as e:
@@ -35,16 +23,8 @@ class ConfigParser:
         return True if self.__postman_collection else False
 
     @property
-    def access_token(self):
-        return self.__postman_collection.get('access_token', None)
-
-    @property
-    def reqeust_header(self):
-        return self.__postman_collection.get('header', None)
-
-    @property
-    def rest_api_url(self):
-        return self.__postman_collection.get('restApiUrl', None)
+    def metadata(self):
+        return self.__postman_collection.get('metadata', None)
 
     @property
     def collection_file_path(self):
