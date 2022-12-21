@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
-from typing import Union, List
+from typing import Union, Dict
 from json.decoder import JSONDecodeError
 from .config_parser import ConfigParser
 
@@ -14,20 +14,22 @@ class PostmanFileParser():
             with open(path, 'r') as f:
                 data = json.loads(f.read())
                 for i in data['item']:
-                    headers = []
+                    # transform the header entries from list to dict
+                    headers = {}
                     for h in i['request']['header']:
                         if h['value'] in metadata:
                             h['value'] = metadata[h['value']]
-                        headers.append(PostmanRequestHeaderItem(
-                            h['key'], h['value']))
+                        hi = PostmanRequestHeaderItem(h['key'], h['value'])
+                        headers[hi.key] = hi.value
 
+                    # replacing the placeholders in url
                     for h in i['request']['url']['host']:
                         if h in metadata:
                             i['request']['url']['raw'] = i['request']['url']['raw'].replace(
                                 h, metadata[h])
 
                     req = PostmanRequest(
-                        i['name'], i['request']['url']['raw'], i['request']['method'], headers)
+                        i['request']['method'], i['request']['url']['raw'], headers, i['name'])
 
                     self.__requests.append(req)
         except JSONDecodeError as e:
@@ -44,7 +46,7 @@ class PostmanFileParser():
 class PostmanRequest:
     method: str
     url: str
-    headers: List[PostmanRequestHeaderItem]
+    headers: Dict[PostmanRequestHeaderItem]
     name: str = ''
 
 
