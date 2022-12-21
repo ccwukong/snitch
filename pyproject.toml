@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "api-snitch"
+version = "0.1.9"
+authors = [
+  { name="Chen Cheng", email="ccwukong@gmail.com" },
+]
+description = "snitch is a CLI tool that helps you do health check, API contract validation and load testing agaist your microservices."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/ccwukong/snitch"
+"Bug Tracker" = "https://github.com/ccwukong/snitch/issues"
+
+[project.scripts]
+snitch = "src.snitch.main:run"

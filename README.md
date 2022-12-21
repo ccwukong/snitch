@@ -34,6 +34,6 @@ First, you need to have a global .json file which provides all essential configu
 Once you have the config JSON file ready, you can run this in your commandline prompt:
 
 ```console 
-python main.py -p your_config_json_file_path
+python3 -m src.snitch.main -p your_config_json_file_path
 
 ```
