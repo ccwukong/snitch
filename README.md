@@ -20,15 +20,23 @@ pip install api-snitch
 Once you have the config JSON file ready, you can run this in your commandline prompt:
 
 ```
-snitch -p your_config_json_file_path
+snitch -p your_config_json_file_path [-o your_output_directory]
 ```
+
+### Flags
+| flag      | Description |
+| ----------- | ----------- |
+| -p      | Your config JSON file path |
+| --path   | same as -p        |
+| -o      | ***OPTIONAL*** Your output directory for storing the test results. It has to be a directory |
+| --output   | same as -o        |
 
 ## Development
 
 Run the following command under **root** directory(NOT src/snitch/) to avoid the relative import path issue.
 
 ```console 
-python3 -m src.snitch.main -p your_config_json_file_path
+python3 -m src.snitch.main -p your_config_json_file_path [-o your_output_directory]
 
 ```
 
