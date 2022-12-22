@@ -16,7 +16,7 @@ async def run_health_check(requests):
 
     status = {}
     status['total'] = len(res)
-    status['errors'] = len([i.has_err for i in res])
+    status['errors'] = len([i for i in res if i.has_err])
     status['success'] = status['total'] - status['errors']
     status['responses'] = [
         f'Name: {i.name}\nError: {i.has_err}\nLatency: {i.run_time}s' for i in res]
@@ -26,18 +26,33 @@ async def run_health_check(requests):
 
 async def request(session, request) -> LogItem:
     try:
-        msg = ''
         start = time()
+        msg = ''
         if request.method == 'GET':
             async with session.get(request.url, headers=request.headers) as response:
+                if response.status >= 400:
+                    raise Exception(f'{response.status} - {response.content}')
                 msg = await response.text()
         elif request.method == 'POST':
             async with session.post(request.url, headers=request.headers, data=json.dumps(request.body)) as response:
+                if response.status >= 400:
+                    raise Exception(f'{response.status} - {response.content}')
+                msg = await response.text()
+        elif request.method == 'PUT':
+            async with session.put(request.url, headers=request.headers, data=json.dumps(request.body)) as response:
+                if response.status >= 400:
+                    raise Exception(f'{response.status} - {response.content}')
+                msg = await response.text()
+        elif request.method == 'DELETE':
+            async with session.post(request.url, headers=request.headers) as response:
+                if response.status >= 400:
+                    raise Exception(f'{response.status} - {response.content}')
                 msg = await response.text()
         end = time()
 
         return LogItem(False, end - start, msg, request.name)
     except Exception as e:
+        end = time()
         return LogItem(True, end - start, e, request.name)
 
 
