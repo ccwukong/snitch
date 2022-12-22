@@ -5,6 +5,7 @@ import os
 from time import time
 import uuid
 from .parsers.postman_parser import PostmanFileParser
+from .parsers.openapi_parser import OpenApiParser
 from .parsers.config_parser import ConfigParser
 from .task_runners.health_check import run_health_check
 
@@ -21,7 +22,7 @@ async def run(path, output):
 
             if config.has_postman_collection:
                 pp = PostmanFileParser(
-                    config.collection_file_path, config.metadata)
+                    config.collection_file_path, config.collection_metadata)
 
                 # run health check and API validation, and handle the result
                 res = await run_health_check(pp.requests)
@@ -53,7 +54,10 @@ async def run(path, output):
                 click.echo(click.style(
                     f"Success rate: {(res['success']/(res['success']+res['errors'])*100):.2f}%", fg='green'))
 
-                # run load testing
+            if config.has_openapi:
+                op = OpenApiParser(
+                    config.openapi_file_path, config.openapi_metadata)
+
     except Exception as e:
         click.echo(e)
 

@@ -14,7 +14,7 @@ Install snitch via pip.
 **❗CAUTION** The package name is **api-snitch** instead of **snitch**.
 
 ```
-pip install api-snitch
+pip3 install api-snitch
 ```
 
 Once you have the config JSON file ready, you can run this in your commandline prompt:
@@ -42,7 +42,7 @@ python3 -m src.snitch.main -p your_config_json_file_path [-o your_output_directo
 
 ## How does this work?
 
-snitch accepts 2 types of API contracts: Postman collection file or OpenAPI(Swagger) file.
+snitch accepts 2 types of API contracts: Postman collection file version >= 2.1 or OpenAPI(Swagger) file version >= 3.
 
 First, you need to have a global .json file which provides all essential configurations in order to run the test. You can use this template:
 ```json

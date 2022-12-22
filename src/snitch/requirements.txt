@@ -3,3 +3,4 @@ asyncclick
 tox
 coverage
 aiohttp
+pyyaml
