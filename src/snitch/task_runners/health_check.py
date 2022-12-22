@@ -1,37 +1,54 @@
 import json
 import aiohttp
+import asyncio
+from time import time
 from json.decoder import JSONDecodeError
+from ..logger import LogItem
 
 
 async def run_health_check(requests):
+
     # create different tasks to send request asynchronousely using coroutine
     # to increase concurrency.
     # we use aiohttp here, so no need to mix coroutines with the threading pool
     async with aiohttp.ClientSession() as s:
         res = await get_all_requests(s, requests)
 
-    print(res)
+    status = {}
+    status['total'] = len(res)
+    status['errors'] = len([i.has_err for i in res])
+    status['success'] = status['total'] - status['errors']
+    status['responses'] = [
+        f'Name: {i.name}\nError: {i.has_err}\nLatency: {i.run_time}s' for i in res]
+
+    return status
 
 
-async def request(session, request):
+async def request(session, request) -> LogItem:
     try:
+        msg = ''
+        start = time()
         if request.method == 'GET':
             async with session.get(request.url, headers=request.headers) as response:
-                return await response.json()
+                msg = await response.text()
         elif request.method == 'POST':
             async with session.post(request.url, headers=request.headers, data=json.dumps(request.body)) as response:
-                return await response.text()
+                msg = await response.text()
+        end = time()
+
+        return LogItem(False, end - start, msg, request.name)
     except Exception as e:
-        raise e
+        return LogItem(True, end - start, e, request.name)
 
 
 async def get_all_requests(session, requests):
     try:
         tasks = []
-
         for req in requests:
             tasks.append(asyncio.create_task(request(session, req)))
 
-        return await asyncio.gather(*tasks)
+        result = await asyncio.gather(*tasks)
+
+        return result
     except Exception as e:
         raise e
