@@ -43,7 +43,7 @@ async def request(session, request) -> LogItem:
                     raise Exception(f'{response.status} - {response.content}')
                 msg = await response.text()
         elif request.method == 'DELETE':
-            async with session.post(request.url, headers=request.headers) as response:
+            async with session.delete(request.url, headers=request.headers) as response:
                 if response.status >= 400:
                     raise Exception(f'{response.status} - {response.content}')
                 msg = await response.text()
