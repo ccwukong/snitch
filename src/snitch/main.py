@@ -9,13 +9,12 @@ import aiohttp
 
 
 async def request(session, request):
-
     try:
         if request.method == 'GET':
             async with session.get(request.url, headers=request.headers) as response:
                 return await response.json()
         elif request.method == 'POST':
-            print(json.dumps(request.body))
+            print(request.headers, json.dumps(request.body))
             async with session.post(request.url, headers=request.headers, data=json.dumps(request.body)) as response:
                 return await response.json()
     except Exception as e:

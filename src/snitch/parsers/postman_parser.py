@@ -19,8 +19,13 @@ class PostmanFileParser():
                     for h in i['request']['header']:
                         if h['value'] in metadata:
                             h['value'] = metadata[h['value']]
-                        hi = PostmanRequestHeaderItem(h['key'], h['value'])
+                        hi = PostmanRequestHeaderItem(
+                            h['key'].lower(), h['value'])
                         headers[hi.key] = hi.value
+
+                    # edge case, if method is POST but content-type is missing
+                    if i['request']['method'] == 'POST':
+                        headers['content-type'] = 'application/json'
 
                     # replacing the placeholders in url
                     for h in i['request']['url']['host']:
