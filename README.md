@@ -35,9 +35,7 @@ First, you need to have a global .json file which provides all essential configu
 
 Install snitch via pip. 
 
-**CAUSION**
-
-The package name is **api-snitch**.
+**❗CAUTION** The package name is **api-snitch** instead of **snitch**.
 
 ```
 pip install api-snitch
