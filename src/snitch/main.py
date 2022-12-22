@@ -1,36 +1,9 @@
 import anyio
 import asyncclick as click
-import json
-from json.decoder import JSONDecodeError
+import asyncio
 from .parsers.postman_parser import PostmanFileParser
 from .parsers.config_parser import ConfigParser
-import asyncio
-import aiohttp
-
-
-async def request(session, request):
-    try:
-        if request.method == 'GET':
-            async with session.get(request.url, headers=request.headers) as response:
-                return await response.json()
-        elif request.method == 'POST':
-            print(request.headers, json.dumps(request.body))
-            async with session.post(request.url, headers=request.headers, data=json.dumps(request.body)) as response:
-                return await response.json()
-    except Exception as e:
-        raise e
-
-
-async def get_all_requests(session, requests):
-    try:
-        tasks = []
-
-        for req in requests:
-            tasks.append(asyncio.create_task(request(session, req)))
-
-        return await asyncio.gather(*tasks)
-    except Exception as e:
-        raise e
+from .task_runners.health_check import run_health_check
 
 
 @ click.command()
@@ -45,14 +18,7 @@ async def run(path):
             if config.has_postman_collection:
                 pp = PostmanFileParser(
                     config.collection_file_path, config.metadata)
-
-        # create different tasks to send request asynchronousely using coroutine
-        # to increase concurrency.
-        # we use aiohttp here, so no need to mix coroutines with the threading pool
-        async with aiohttp.ClientSession() as s:
-            res = await get_all_requests(s, pp.requests)
-
-        print(res)
+        run_health_check(pp.requests)
     except Exception as e:
         click.echo(e)
 
