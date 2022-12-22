@@ -49,6 +49,8 @@ snitch -p your_config_json_file_path
 
 ## Development
 
+Run the following command to avoid the relative import path issue.
+
 ```console 
 python3 -m src.snitch.main -p your_config_json_file_path
 
