@@ -31,7 +31,25 @@ First, you need to have a global .json file which provides all essential configu
 }
 ```
 
+## Installation
+
+Install snitch via pip. 
+
+**CAUSION**
+
+The package name is **api-snitch**.
+
+```
+pip install api-snitch
+```
+
 Once you have the config JSON file ready, you can run this in your commandline prompt:
+
+```
+snitch -p your_config_json_file_path
+```
+
+## Development
 
 ```console 
 python3 -m src.snitch.main -p your_config_json_file_path
