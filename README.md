@@ -8,7 +8,33 @@ There's no tendancies to replace your existing testing tools, but rather provide
 - Load testing (using aiohttp)
 - More to come
 
+## Installation
+
+Install snitch via pip. 
+
+**❗CAUTION** The package name is **api-snitch** instead of **snitch**.
+
+```
+pip install api-snitch
+```
+
+Once you have the config JSON file ready, you can run this in your commandline prompt:
+
+```
+snitch -p your_config_json_file_path
+```
+
+## Development
+
+Run the following command under **root** directory(NOT src/snitch/) to avoid the relative import path issue.
+
+```console 
+python3 -m src.snitch.main -p your_config_json_file_path
+
+```
+
 ## How does this work?
+
 snitch accepts 2 types of API contracts: Postman collection file or OpenAPI(Swagger) file.
 
 First, you need to have a global .json file which provides all essential configurations in order to run the test. You can use this template:
@@ -31,27 +57,6 @@ First, you need to have a global .json file which provides all essential configu
 }
 ```
 
-## Installation
-
-Install snitch via pip. 
-
-**❗CAUTION** The package name is **api-snitch** instead of **snitch**.
-
-```
-pip install api-snitch
-```
-
-Once you have the config JSON file ready, you can run this in your commandline prompt:
-
-```
-snitch -p your_config_json_file_path
-```
-
-## Development
-
-Run the following command to avoid the relative import path issue.
-
-```console 
-python3 -m src.snitch.main -p your_config_json_file_path
-
-```
+## TODO
+- support other content-type values other than application/json
+- Improve exception handling

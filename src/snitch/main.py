@@ -9,10 +9,14 @@ import aiohttp
 
 
 async def request(session, request):
+
     try:
         if request.method == 'GET':
             async with session.get(request.url, headers=request.headers) as response:
-                print(2)
+                return await response.json()
+        elif request.method == 'POST':
+            print(json.dumps(request.body))
+            async with session.post(request.url, headers=request.headers, data=json.dumps(request.body)) as response:
                 return await response.json()
     except Exception as e:
         raise e
@@ -38,6 +42,7 @@ async def run(path):
         # needs to read
         with open(path, 'r') as f:
             config = ConfigParser(f.read())
+
             if config.has_postman_collection:
                 pp = PostmanFileParser(
                     config.collection_file_path, config.metadata)
@@ -48,11 +53,10 @@ async def run(path):
         async with aiohttp.ClientSession() as s:
             res = await get_all_requests(s, pp.requests)
 
-        # print(res)
+        print(res)
     except Exception as e:
         click.echo(e)
 
 
 if __name__ == '__main__':
-    print(__package__)
     asyncio.run(run())

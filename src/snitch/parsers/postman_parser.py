@@ -28,8 +28,17 @@ class PostmanFileParser():
                             i['request']['url']['raw'] = i['request']['url']['raw'].replace(
                                 h, metadata[h])
 
+                    # body payload could be malformatted
+                    # TODO: support content-type other than application/json
+                    body = None
+                    try:
+                        if 'body' in i['request'] and i['request']['body']['mode'] == 'raw':
+                            body = json.loads(i['request']['body']['raw'])
+                    except Exception as e:
+                        body = None
+
                     req = PostmanRequest(
-                        i['request']['method'], i['request']['url']['raw'], headers, i['name'])
+                        i['request']['method'], i['request']['url']['raw'], headers, body, i['name'])
 
                     self.__requests.append(req)
         except JSONDecodeError as e:
@@ -47,6 +56,7 @@ class PostmanRequest:
     method: str
     url: str
     headers: Dict[PostmanRequestHeaderItem]
+    body: Dict = None
     name: str = ''
 
 
