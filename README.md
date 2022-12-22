@@ -1,11 +1,10 @@
 # snitch
-snitch is a CLI tool that helps you do health check, API contract validation and load testing agaist your microservices.
+snitch is a CLI tool that helps you do health check, API contract validation and more for your microservices.
 
 There's no tendancies to replace your existing testing tools, but rather provides a convenient way to check your microservices on demand.
 ## Main features
 - Health check on every endpoint concurrently (using aiohttp)
 - API Contract validation
-- Load testing (using aiohttp)
 - More to come
 
 ## Installation

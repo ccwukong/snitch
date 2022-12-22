@@ -23,6 +23,7 @@ async def run(path, output):
                 pp = PostmanFileParser(
                     config.collection_file_path, config.metadata)
 
+                # run health check and API validation, and handle the result
                 res = await run_health_check(pp.requests)
 
                 if output:
@@ -51,6 +52,8 @@ async def run(path, output):
                 click.echo(click.style(f"Errors: {res['errors']}", fg='red'))
                 click.echo(click.style(
                     f"Success rate: {(res['success']/(res['success']+res['errors'])*100):.2f}%", fg='green'))
+
+                # run load testing
     except Exception as e:
         click.echo(e)
 

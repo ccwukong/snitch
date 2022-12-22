@@ -7,7 +7,6 @@ from ..logger import LogItem
 
 
 async def run_health_check(requests):
-
     # create different tasks to send request asynchronousely using coroutine
     # to increase concurrency.
     # we use aiohttp here, so no need to mix coroutines with the threading pool
@@ -27,7 +26,7 @@ async def run_health_check(requests):
 async def request(session, request) -> LogItem:
     try:
         start = time()
-        msg = ''
+
         if request.method == 'GET':
             async with session.get(request.url, headers=request.headers) as response:
                 if response.status >= 400:
