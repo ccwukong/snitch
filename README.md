@@ -1,3 +1,4 @@
+![logo](docs/logo.png)
 # snitch
 snitch is a CLI tool that helps you do health check, API contract validation and more for your microservices.
 
