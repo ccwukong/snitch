@@ -33,12 +33,12 @@ async def request(session, request) -> LogItem:
                     raise Exception(f'{response.status} - {response.content}')
                 msg = await response.text()
         elif request.method == 'POST':
-            async with session.post(request.url, headers=request.headers, data=json.dumps(request.body)) as response:
+            async with session.post(request.url, headers=request.headers, json=request.body) as response:
                 if response.status >= 400:
                     raise Exception(f'{response.status} - {response.content}')
                 msg = await response.text()
         elif request.method == 'PUT':
-            async with session.put(request.url, headers=request.headers, data=json.dumps(request.body)) as response:
+            async with session.put(request.url, headers=request.headers, json=request.body) as response:
                 if response.status >= 400:
                     raise Exception(f'{response.status} - {response.content}')
                 msg = await response.text()

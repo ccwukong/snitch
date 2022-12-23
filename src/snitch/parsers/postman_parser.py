@@ -36,6 +36,9 @@ class PostmanFileParser():
                         if 'body' in i['request'] and i['request']['body']['mode'] == 'raw':
                             body = json.loads(
                                 i['request']['body']['raw'].strip())
+
+                            while type(body) == str:
+                                body = json.loads(body)
                     except Exception as e:
                         body = None
 

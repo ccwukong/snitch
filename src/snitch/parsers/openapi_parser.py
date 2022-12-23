@@ -1,4 +1,5 @@
 import yaml
+import json
 from json.decoder import JSONDecodeError
 from .request_model import Request, RequestHeader
 
@@ -17,12 +18,16 @@ class OpenApiParser:
                         method = self.__extract_method(v)
                         headers = self.__extract_header_items(
                             v[method.lower()]['parameters'])
+                        queries = []
+                        for q in [itm for itm in v[method.lower()]['parameters'] if itm['in'] == 'query']:
+                            if q['example'] in self.__metadata:
+                                q['example'] = self.__metadata[q['example']]
+                            queries.append(f"{q['name']}={q['example']}")
 
                         if method in set(['POST', 'PUT']):
-                            headers.append(
-                                {'content-type': 'application/json'})
+                            headers['content-type'] = 'application/json'
 
-                        body = {}
+                        body = None
 
                         if 'requestBody' in v[method.lower()]:
                             if 'application/json' in v[method.lower()]['requestBody']['content']:
@@ -31,15 +36,18 @@ class OpenApiParser:
                             elif '*/*' in v[method.lower()]['requestBody']['content']:
                                 body = v[method.lower(
                                 )]['requestBody']['content']['*/*']['schema']['example']
+                        while type(body) == str:
+                            body = json.loads(body)
 
                         for key, val in self.__metadata.items():
                             s = s.replace(key, val)
 
-                        req = Request(method, s + k, headers,
+                        req = Request(method, f"{s + k}{'?' + '&'.join(queries) if queries else ''}", headers,
                                       body, v[method.lower()]['summary'])
 
                         self.__requests.append(req)
-
+        except JSONDecodeError as e:
+            raise e  # TODO: handle this differently
         except FileNotFoundError as e:
             raise e
 
@@ -54,13 +62,13 @@ class OpenApiParser:
             return 'DELETE'
 
     def __extract_header_items(self, arr) -> list[dict[str, str]]:
-        headers = []
+        headers = {}
         for p in arr:
             if p['in'] == 'header':
                 if p['example'] in self.__metadata:
                     p['example'] = self.__metadata[p['example']]
-                h = RequestHeader(p['name'], p['example'])
-                headers.append({h.key: h.value})
+                h = RequestHeader(p['name'].lower(), p['example'])
+                headers[h.key] = h.value
 
         return headers
 
