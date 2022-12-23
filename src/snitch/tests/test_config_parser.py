@@ -24,7 +24,7 @@ class TestConfigParser(unittest.TestCase):
             },
             "openApi": {
                 "version": "3.0.0",
-                "filePath": "absolute_path_to_the_postman_collection_yaml_file",
+                "filePath": "absolute_path_to_the_open_api_yaml_file",
                 "metadata": {
                     "{{restUrl}}": "https://your_api_domain",
                     "{{accessToken}}": "the access token string",
@@ -42,3 +42,17 @@ class TestConfigParser(unittest.TestCase):
 
         self.assertTrue(config.has_postman_collection)
         self.assertTrue(config.has_openapi)
+        self.assertEqual(config.collection_metadata, {
+            "{{restUrl}}": "https://your_api_domain",
+            "{{accessToken}}": "the access token string",
+            "{{apiKey}}": "api key string"
+        })
+        self.assertEqual(config.openapi_metadata, {
+            "{{restUrl}}": "https://your_api_domain",
+            "{{accessToken}}": "the access token string",
+            "{{apiKey}}": "api key string"
+        })
+        self.assertEqual(config.collection_file_path,
+                         "absolute_path_to_the_postman_collection_json_file")
+        self.assertEqual(config.openapi_file_path,
+                         "absolute_path_to_the_open_api_yaml_file")
