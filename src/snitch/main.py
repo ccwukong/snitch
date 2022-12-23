@@ -39,32 +39,47 @@ async def run(path, output):
                 if output:
                     if os.path.exists(output):
                         f = open(os.path.join(
-                            output, f'hc_{time()}_{uuid.uuid4()}.txt'), 'w')
-                        s = f"Datetime: {datetime.now()}\nTotal endpoints checked: {res['total']}\nSuccess: {res['success']}\nErrors: {res['errors']}\n\n\n"
-                        for r in res['responses']:
-                            s += f"{r}\n{'-'*50}\n"
-                        f.write(s)
+                            output, generate_file_name()), 'w')
+
+                        f.write(construct_header(res))
                         f.close()
                     else:
                         click.echo(click.style(
                             'Error: output destination directory doesn\'t exist.', fg='red'))
-
-                click.echo('-'*50)
-                for r in res['responses']:
-                    click.echo(r)
-                    click.echo('-'*50)
-                click.echo(click.style(
-                    f"Datetime: {datetime.now()}", fg='green'))
-                click.echo(click.style(
-                    f"Total endpoints checked: {res['total']}", fg='green'))
-                click.echo(click.style(
-                    f"Success: {res['success']}", fg='green'))
-                click.echo(click.style(f"Errors: {res['errors']}", fg='red'))
-                click.echo(click.style(
-                    f"Success rate: {(res['success']/(res['success']+res['errors'])*100):.2f}%", fg='green'))
-
+                print_msg(res)
     except Exception as e:
         click.echo(e)
+
+
+def construct_header(res) -> str:
+    s = f"Datetime: {datetime.now()}\nTotal endpoints checked: {res['total']}\nSuccess: {res['success']}\nErrors: {res['errors']}\n\n\n"
+    for r in res['responses']:
+        s += f"{r}\n{'-'*50}\n"
+    return s
+
+
+def generate_file_name() -> str:
+    return f'hc_{time()}_{uuid.uuid4()}.log'
+
+
+def print_msg(res) -> None:
+    click.echo('-'*50)
+    for r in res['responses']:
+        click.echo(r)
+        click.echo('-'*50)
+    click.echo(click.style(
+        f"Datetime: {datetime.now()}", fg='green'))
+    click.echo(click.style(
+        f"Total endpoints checked: {res['total']}", fg='green'))
+    click.echo(click.style(
+        f"Success: {res['success']}", fg='green'))
+    click.echo(click.style(f"Errors: {res['errors']}", fg='red'))
+    click.echo(click.style(
+        f"Success rate: {calc_success_perentage(res):.2f}%", fg='green'))
+
+
+def calc_success_perentage(res) -> float:
+    return res['success']/(res['success']+res['errors'])*100
 
 
 if __name__ == '__main__':
