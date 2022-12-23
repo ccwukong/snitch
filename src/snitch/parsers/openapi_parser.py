@@ -32,14 +32,15 @@ class OpenApiParser:
                                 body = v[method.lower(
                                 )]['requestBody']['content']['*/*']['schema']['example']
 
+                        for key, val in self.__metadata.items():
+                            s = s.replace(key, val)
+
                         req = Request(method, s + k, headers,
                                       body, v[method.lower()]['summary'])
 
                         self.__requests.append(req)
 
         except FileNotFoundError as e:
-            raise e
-        except Exception as e:
             raise e
 
     def __extract_method(self, obj) -> str:
