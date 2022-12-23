@@ -20,7 +20,7 @@ class PostmanFileParser():
                         headers[hi.key] = hi.value
 
                     # edge case, if method is POST but content-type is missing
-                    if i['request']['method'] == 'POST':
+                    if i['request']['method'] in set(['POST', 'PUT']):
                         headers['content-type'] = 'application/json'
 
                     # replacing the placeholders in url
