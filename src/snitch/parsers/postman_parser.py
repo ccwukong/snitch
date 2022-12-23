@@ -1,6 +1,6 @@
 import json
 from json.decoder import JSONDecodeError
-from ..requests import Request, RequestHeader
+from .request_model import Request, RequestHeader
 
 
 class PostmanFileParser():
