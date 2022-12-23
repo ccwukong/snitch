@@ -1,10 +1,6 @@
-from __future__ import annotations
-
 import json
-from dataclasses import dataclass
-from typing import Union, Dict
 from json.decoder import JSONDecodeError
-from .config_parser import ConfigParser
+from ..requests import Request, RequestHeader
 
 
 class PostmanFileParser():
@@ -19,7 +15,7 @@ class PostmanFileParser():
                     for h in i['request']['header']:
                         if h['value'] in metadata:
                             h['value'] = metadata[h['value']]
-                        hi = PostmanRequestHeaderItem(
+                        hi = RequestHeader(
                             h['key'].lower(), h['value'])
                         headers[hi.key] = hi.value
 
@@ -43,7 +39,7 @@ class PostmanFileParser():
                     except Exception as e:
                         body = None
 
-                    req = PostmanRequest(
+                    req = Request(
                         i['request']['method'], i['request']['url']['raw'], headers, body, i['name'])
 
                     self.__requests.append(req)
@@ -55,18 +51,3 @@ class PostmanFileParser():
     @property
     def requests(self):
         return self.__requests
-
-
-@dataclass
-class PostmanRequest:
-    method: str
-    url: str
-    headers: Dict[PostmanRequestHeaderItem]
-    body: Dict = None
-    name: str = ''
-
-
-@dataclass
-class PostmanRequestHeaderItem:
-    key: str
-    value: Union[str, int, float]
