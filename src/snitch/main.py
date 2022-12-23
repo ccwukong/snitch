@@ -34,6 +34,7 @@ async def run(path, output):
                 requests.extend(op.requests)
 
             if requests:
+                click.echo(click.style('Running Health check ...', fg='green'))
                 res = await run_health_check(requests)
                 if output:
                     if os.path.exists(output):
@@ -48,7 +49,6 @@ async def run(path, output):
                         click.echo(click.style(
                             'Error: output destination directory doesn\'t exist.', fg='red'))
 
-                click.echo(click.style('Health check', fg='green'))
                 click.echo('-'*50)
                 for r in res['responses']:
                     click.echo(r)

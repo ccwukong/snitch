@@ -51,13 +51,27 @@ First, you need to have a global .json file which provides all essential configu
     "version": "2.1", 
     "collectionFilePath": "absolute_path_to_the_postman_collection_json_file",
     "metadata":{ // you can put all your placeholder strings here, for instance, the placeholder string for the host of the REST endpoints
-      "{{rest_url}}": "https://your_api_domain",
+      "{{restUrl}}": "https://your_api_domain",
       "{{accessToken}}": "the access token string",
       "{{apiKey}}": "api key string",
       ...
     },
     "header":{
       "Authorization":"{{accessToken}}", // the placeholder string will be replaced by the metadata values automatically by the script
+      "x-api-key":"{{apiKey}}"
+    }
+  },
+  "openApi": {
+    "version": "3.0.0", 
+    "filePath": "absolute_path_to_the_postman_collection_yaml_file",
+    "metadata":{
+      "{{restUrl}}": "https://your_api_domain",
+      "{{accessToken}}": "the access token string",
+      "{{apiKey}}":"api key string",
+      ...
+    },
+    "header":{
+      "Authorization":"{{accessToken}}",
       "x-api-key":"{{apiKey}}"
     }
   }
