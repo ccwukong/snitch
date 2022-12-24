@@ -4,9 +4,10 @@ import asyncio
 from time import time
 from json.decoder import JSONDecodeError
 from ..logger import LogItem
+from ..parsers.request_model import Request
 
 
-async def run_health_check(requests):
+async def run_health_check(requests: list[Request]) -> dict:
     # create different tasks to send request asynchronousely using coroutine
     # to increase concurrency.
     # we use aiohttp here, so no need to mix coroutines with the threading pool
@@ -26,7 +27,6 @@ async def run_health_check(requests):
 async def request(session, request) -> LogItem:
     try:
         start = time()
-
         if request.method == 'GET':
             async with session.get(request.url, headers=request.headers) as response:
                 if response.status >= 400:
@@ -55,7 +55,7 @@ async def request(session, request) -> LogItem:
         return LogItem(True, end - start, e, request.name)
 
 
-async def get_all_requests(session, requests):
+async def get_all_requests(session, requests) -> list[LogItem]:
     try:
         tasks = []
         for req in requests:

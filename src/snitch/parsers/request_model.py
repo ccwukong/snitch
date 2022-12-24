@@ -8,8 +8,8 @@ from typing import Union, Dict
 class Request:
     method: str
     url: str
-    headers: Dict[RequestHeader]
-    body: Dict = None
+    headers: dict
+    body: dict = None
     name: str = ''
 
 

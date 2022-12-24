@@ -89,4 +89,4 @@ def calc_success_perentage(res) -> float:
 
 
 if __name__ == '__main__':
-    asyncio.run(run())
+    run()

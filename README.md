@@ -35,6 +35,18 @@ snitch -p your_config_json_file_path [-o your_output_directory]
 
 ## Development
 
+### Create a Python 3 virtual environment under **src/snitch/**
+
+```console
+cd src/snitch
+
+python3 -m venv venv
+
+source ./venv/bin/activate
+```
+
+### Run the program
+
 Run the following command under **root** directory(NOT src/snitch/) to avoid the relative import path issue.
 
 ```console 
@@ -42,7 +54,9 @@ python3 -m src.snitch.main -p your_config_json_file_path [-o your_output_directo
 
 ```
 
-Run unit testing
+### Run unit testing
+
+Run unit testing under **root** directory(NOT src/snitch/)
 ```console
 tox -e py310 -- ./tests
 ```
