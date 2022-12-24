@@ -1,7 +1,9 @@
 from parsers.config_parser import ConfigParser
+from parsers.parser_exceptions import InvalidPostmanCollectionVersion, InvalidOpenApiVersion
 import unittest
 import sys
 import os
+import json
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, current_path + '/../')
 
@@ -56,3 +58,21 @@ class TestConfigParser(unittest.TestCase):
                          "absolute_path_to_the_postman_collection_json_file")
         self.assertEqual(config.openapi_file_path,
                          "absolute_path_to_the_open_api_yaml_file")
+
+    def test_ConfigParser_InvalidPostmanCollectionVersion(self):
+        tmp = json.loads(self.__data)
+        tmp['postmanCollection']['version'] = '1.0'
+        tmp['openApi']['version'] = '3.0.0'
+        self.__data = json.dumps(tmp)
+
+        with self.assertRaises(InvalidPostmanCollectionVersion):
+            ConfigParser(self.__data)
+
+    def test_ConfigParser_InvalidOpenApiVersion(self):
+        tmp = json.loads(self.__data)
+        tmp['postmanCollection']['version'] = '2.1'
+        tmp['openApi']['version'] = '2.0.0'
+        self.__data = json.dumps(tmp)
+
+        with self.assertRaises(InvalidOpenApiVersion):
+            ConfigParser(self.__data)
