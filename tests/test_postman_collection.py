@@ -2,6 +2,7 @@ from src.snitch.parsers.postman_parser import PostmanCollectionParser
 from src.snitch.parsers.request_model import Request
 import unittest
 from unittest.mock import patch, mock_open
+from json.decoder import JSONDecodeError
 
 
 class TestPostmanCollectionParser(unittest.TestCase):
@@ -21,3 +22,8 @@ class TestPostmanCollectionParser(unittest.TestCase):
         self.assertEqual(len(reqs.requests), 1)
         self.assertEqual(type(reqs.requests[0]), Request)
         self.assertEqual(reqs.requests[0].url, '{{apiDomain}}/users?uid=123')
+
+    def test_PostmanCollectionParser_error(self):
+        with patch("builtins.open", mock_open(read_data=self.data+',')) as mock_file:
+            with self.assertRaises(JSONDecodeError):
+                reqs = PostmanCollectionParser('')
