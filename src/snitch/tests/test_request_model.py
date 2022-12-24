@@ -7,7 +7,7 @@ sys.path.insert(0, current_path + '/../')
 
 
 class TestRequestModel(unittest.TestCase):
-    def test_request(self):
+    def test_Request(self):
         r = Request('POST', 'https://example.com',
                     {'authorization': 'token', 'x-api-key': 'key'}, None, 'test api')
 
@@ -18,7 +18,7 @@ class TestRequestModel(unittest.TestCase):
         self.assertEqual(
             r.headers, {'authorization': 'token', 'x-api-key': 'key'})
 
-    def test_request_header(self):
+    def test_RequestHeader(self):
         r = RequestHeader('content-type', 'application/json')
 
         self.assertEqual(r.key, 'content-type')

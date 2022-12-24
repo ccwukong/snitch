@@ -1,6 +1,6 @@
 import json
 from json.decoder import JSONDecodeError
-from ..exceptions import InvalidOpenApiVersion, InvalidPostmanCollectionVersion
+from .parser_exceptions import InvalidOpenApiVersion, InvalidPostmanCollectionVersion
 
 
 class ConfigParser:

@@ -37,7 +37,7 @@ class TestConfigParser(unittest.TestCase):
             }
         }'''
 
-    def test_config_parser(self):
+    def test_ConfigParser(self):
         config = ConfigParser(self.__data)
 
         self.assertTrue(config.has_postman_collection)

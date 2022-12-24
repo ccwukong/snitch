@@ -10,5 +10,5 @@ class TestPostmanCollectionParser(unittest.TestCase):
     def setUp(self):
         pass
 
-    def test_postman_collection_parser(self):
+    def test_PostmanCollectionParser(self):
         pass
