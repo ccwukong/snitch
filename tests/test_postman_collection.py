@@ -11,7 +11,7 @@ class TestPostmanCollectionParser(unittest.TestCase):
                             "_exporter_id": "6670289"}, "item": [{"name": "Test endpoint","request": {"method": "GET","header":
                             [{"key": "Authorization","type": "text","value": "{{accessToken}}"},{
                                 "key": "x-api-key","type": "text","value": "{{apiKey}}"}],
-                                    "url": {"raw": "{{apiDomain}}/users?uid=123","host": ["{{apiDomain}}"],"path": ["forecast","daily"],"query":
+                                    "url": {"raw": "{{apiDomain}}/users?uid=123","host": ["{{apiDomain}}"],"path": ["users"],"query":
                                     [{"key": "uid","value": "123"}]}},"response": []}]}'''
 
     def test_PostmanCollectionParser(self):
