@@ -5,7 +5,7 @@ import os
 from time import time
 from datetime import datetime
 import uuid
-from .parsers.postman_parser import PostmanFileParser
+from .parsers.postman_parser import PostmanCollectionParser
 from .parsers.openapi_parser import OpenApiParser
 from .parsers.config_parser import ConfigParser
 from .task_runners.health_check import run_health_check
@@ -23,7 +23,7 @@ async def run(path, output):
             requests = []
 
             if config.has_postman_collection:
-                pp = PostmanFileParser(
+                pp = PostmanCollectionParser(
                     config.collection_file_path, config.collection_metadata)
                 requests.extend(pp.requests)
                 # run health check and API validation, and handle the result
@@ -48,13 +48,13 @@ async def run(path, output):
                             'Error: output destination directory doesn\'t exist.', fg='red'))
                 print_msg(res)
     except Exception as e:
-        click.echo(e)
+        click.echo(click.style(e, fg='red'))
 
 
 def construct_header(res) -> str:
     s = f"Datetime: {datetime.now()}\nTotal endpoints checked: {res['total']}\nSuccess: {res['success']}\nErrors: {res['errors']}\n\n\n"
     for r in res['responses']:
-        s += f"{r}\n{'-'*50}\n"
+        s += f"{r['message']}\n{'-'*50}\n"
     return s
 
 
@@ -65,8 +65,14 @@ def generate_file_name() -> str:
 def print_msg(res) -> None:
     click.echo('-'*50)
     for r in res['responses']:
-        click.echo(r)
-        click.echo('-'*50)
+        if not r['error']:
+            click.echo(r['message'])
+        else:
+            click.echo(click.style(
+                r['message'], fg='red'))
+        print('\n')
+
+    click.echo('-'*50)
     click.echo(click.style(
         f"Datetime: {datetime.now()}", fg='green'))
     click.echo(click.style(

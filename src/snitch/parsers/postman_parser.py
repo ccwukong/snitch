@@ -3,7 +3,7 @@ from json.decoder import JSONDecodeError
 from .request_model import Request, RequestHeader
 
 
-class PostmanFileParser():
+class PostmanCollectionParser():
     def __init__(self, path, metadata={}):
         self.__requests = []
         try:

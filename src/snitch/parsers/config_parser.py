@@ -1,5 +1,6 @@
 import json
 from json.decoder import JSONDecodeError
+from ..exceptions import InvalidOpenApiVersion, InvalidPostmanCollectionVersion
 
 
 class ConfigParser:
@@ -10,16 +11,20 @@ class ConfigParser:
 
         try:
             config = json.loads(data)
-            if 'postmanCollection' in data:
+            if 'postmanCollection' in config:
+                if int(config['postmanCollection']['version'].split('.')[0]) < 2:
+                    raise InvalidPostmanCollectionVersion(
+                        'Error. snitch requires Postman collection version >= 2.0')
                 self.__postman_collection['collection_file_path'] = config['postmanCollection']['collectionFilePath']
                 self.__postman_collection['metadata'] = config['postmanCollection']['metadata']
 
-            if 'openApi' in data:
+            if 'openApi' in config:
+                if int(config['openApi']['version'].split('.')[0]) < 3:
+                    raise InvalidOpenApiVersion(
+                        'Error. snitch requires Open API version >= 3.0.0')
                 self.__openapi['file_path'] = config['openApi']['filePath']
                 self.__openapi['metadata'] = config['openApi']['metadata']
-
-            # TODO: add open api handler
-        except JSONDecodeError as e:
+        except Exception as e:
             raise e
 
     @property

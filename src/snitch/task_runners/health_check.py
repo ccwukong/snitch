@@ -17,8 +17,8 @@ async def run_health_check(requests):
     status['total'] = len(res)
     status['errors'] = len([i for i in res if i.has_err])
     status['success'] = status['total'] - status['errors']
-    status['responses'] = [
-        f'Name: {i.name}\nError: {i.has_err}\nLatency: {i.run_time}s' for i in res]
+    status['responses'] = [{'error': i.has_err, 'message':
+                            f'Name: {i.name}\nError: {i.has_err}\nLatency: {i.run_time}s'} for i in res]
 
     return status
 

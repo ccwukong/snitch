@@ -10,9 +10,10 @@ There's no tendancies to replace your existing testing tools, but rather provide
 
 ## Installation
 
-Install snitch via pip. 
+Install snitch via pip. Make sure you have Python 3 installed on your machine.
 
 **❗CAUTION** The package name is **api-snitch** instead of **snitch**.
+
 
 ```
 pip3 install api-snitch
@@ -41,6 +42,11 @@ python3 -m src.snitch.main -p your_config_json_file_path [-o your_output_directo
 
 ```
 
+Run unit testing
+```console
+tox -e py310 -- ./tests
+```
+
 ## How does this work?
 
 snitch accepts 2 types of API contracts: Postman collection file version >= 2.1 or OpenAPI(Swagger) file version >= 3.
@@ -64,7 +70,7 @@ First, you need to have a global .json file which provides all essential configu
   },
   "openApi": {
     "version": "3.0.0", 
-    "filePath": "absolute_path_to_the_postman_collection_yaml_file",
+    "filePath": "absolute_path_to_the_open_api_yaml_file",
     "metadata":{
       "{{restUrl}}": "https://your_api_domain",
       "{{accessToken}}": "the access token string",
@@ -80,5 +86,5 @@ First, you need to have a global .json file which provides all essential configu
 ```
 
 ## TODO
-- support other content-type values other than application/json
+- Idempotency check
 - Improve exception handling
