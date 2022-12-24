@@ -1,9 +1,5 @@
-from parsers.request_model import Request, RequestHeader
+from src.snitch.parsers.request_model import Request, RequestHeader
 import unittest
-import sys
-import os
-current_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, current_path + '/../')
 
 
 class TestRequestModel(unittest.TestCase):

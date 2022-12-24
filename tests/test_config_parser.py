@@ -1,11 +1,7 @@
-from parsers.config_parser import ConfigParser
-from parsers.parser_exceptions import InvalidPostmanCollectionVersion, InvalidOpenApiVersion
+from src.snitch.parsers.config_parser import ConfigParser
+from src.snitch.parsers.parser_exceptions import InvalidPostmanCollectionVersion, InvalidOpenApiVersion
 import unittest
-import sys
-import os
 import json
-current_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, current_path + '/../')
 
 
 class TestConfigParser(unittest.TestCase):

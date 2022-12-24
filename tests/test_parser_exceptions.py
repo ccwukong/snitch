@@ -1,9 +1,5 @@
-from parsers.parser_exceptions import InvalidPostmanCollectionVersion, InvalidOpenApiVersion
+from src.snitch.parsers.parser_exceptions import InvalidPostmanCollectionVersion, InvalidOpenApiVersion
 import unittest
-import sys
-import os
-current_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, current_path + '/../')
 
 
 class TestExceptions(unittest.TestCase):
