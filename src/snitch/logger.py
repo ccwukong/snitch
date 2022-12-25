@@ -6,4 +6,4 @@ class LogItem:
     has_err: bool
     run_time: float
     message: str
-    name: str = ''
+    name: str = ""

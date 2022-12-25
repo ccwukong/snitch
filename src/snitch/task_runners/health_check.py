@@ -1,8 +1,6 @@
-import json
 import aiohttp
 import asyncio
 from time import time
-from json.decoder import JSONDecodeError
 from ..logger import LogItem
 from ..parsers.request_model import Request
 
@@ -18,8 +16,11 @@ async def run_health_check(requests: list[Request]) -> dict:
     status['total'] = len(res)
     status['errors'] = len([i for i in res if i.has_err])
     status['success'] = status['total'] - status['errors']
-    status['responses'] = [{'error': i.has_err, 'message':
-                            f'Name: {i.name}\nError: {i.has_err}\nLatency: {i.run_time}s'} for i in res]
+    status['responses'] = [
+        {'error': i.has_err,
+         'message':
+         f'Name: {i.name}\nError: {i.has_err}\nLatency: {i.run_time}s'}
+        for i in res]
 
     return status
 

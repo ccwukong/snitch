@@ -35,11 +35,9 @@ snitch -p your_config_json_file_path [-o your_output_directory]
 
 ## Development
 
-### Create a Python 3 virtual environment under **src/snitch/**
+### Create a Python 3 virtual environment under **root** directory(NOT src/snitch/)
 
 ```console
-cd src/snitch
-
 python3 -m venv venv
 
 source ./venv/bin/activate
@@ -63,7 +61,7 @@ tox -e py310 -- ./tests
 
 ## How does this work?
 
-snitch accepts 2 types of API contracts: Postman collection file version >= 2.1 or OpenAPI(Swagger) file version >= 3.
+snitch accepts 2 types of API contracts: Postman collection file version >= 2.1 or OpenAPI(Swagger) file version >= 3.0.0.
 
 First, you need to have a global .json file which provides all essential configurations in order to run the test. You can use this template:
 ```json
