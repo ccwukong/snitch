@@ -7,7 +7,7 @@ There's no tendancies to replace your existing testing tools, but rather provide
 ## Main features
 
 - Running health check and contract validation concurrently (using coroutine)
-- Running Idempotency check synchronously, this wille be much slower than features run by coroutines(like health check)
+- Running Idempotency check by mixing synchronous requests and coroutines, this will be slightly slower than features run by coroutines merely(e.g. health check)
 - More to come
 
 ## Installation
