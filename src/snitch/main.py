@@ -9,6 +9,7 @@ from .parsers.config_parser import ConfigParser
 from .task_runners.health_check import run_health_check
 from .task_runners.idempotency_check import run_idempotency_check
 from .logger import LogItem
+from .task_runners.report_builder import ReportBuilder
 
 
 @click.command()
@@ -19,6 +20,8 @@ async def run(path, output):
         # reading config file and parse data sychronously, coz there's only 1 config file
         # needs to read
         with open(path, 'r') as f:
+            click.echo(click.style(
+                'Running Health check ...', fg='yellow'))
             config = ConfigParser(f.read())
             reqs = []
 
@@ -34,116 +37,79 @@ async def run(path, output):
                 reqs.extend(op.requests)
 
             if reqs:
-                click.echo(click.style('Running Health check ...', fg='green'))
                 res = await run_health_check(reqs)
+                report_builder = ReportBuilder(res)
+                report_builder.print_divider()
+                report_builder.print_newline()
+                report_builder.print_content()
+                report_builder.print_divider()
+                report_builder.print_summary()
+
                 if output:
                     if os.path.exists(output):
                         f = open(os.path.join(
                             output, generate_file_name('health_check_check')), 'w')
 
-                        f.write(generate_health_check_report(res))
+                        f.write(report_builder.header)
+                        f.write(report_builder.newline)
+                        f.write(report_builder.divider)
+                        f.write(report_builder.newline * 2)
+                        f.write(report_builder.content)
                         f.close()
                     else:
                         click.echo(
                             click.style(
                                 'Error: output destination directory doesn\'t exist.',
                                 fg='red'))
-                print_health_check_report(res)
 
                 click.echo(click.style(
-                    '\nRunning Idempotency check, it will take longer time ...', fg='green'))
-
-                idem_reqs = []
+                    '\nRunning Idempotency check, it will take longer time ...', fg='yellow'))
+                idem_responses = []
                 for re in reqs:
                     res = await run_idempotency_check(re)
-                    idem_reqs.append(res)
-                total = len(idem_reqs)
-                success = len([i for i in idem_reqs if not i.has_err])
-                errs = total - success
-                print_idempotency_report(idem_reqs, success, total, errs)
+                    idem_responses.append(res)
+
+                res = {}
+
+                total = len(idem_responses)
+
+                success = len([i for i in idem_responses if not i['error']])
+                res['total'] = total
+                res['success'] = success
+                res['errors'] = total - success
+                res['responses'] = idem_responses
+
+                report_builder = ReportBuilder(res)
+
+                report_builder.print_divider()
+                report_builder.print_newline()
+                report_builder.print_content()
+                report_builder.print_divider()
+                report_builder.print_summary()
 
                 if output:
                     if os.path.exists(output):
                         f = open(os.path.join(
                             output, generate_file_name('idempotency')), 'w')
 
-                        f.write(generate_idempotency_check_report(
-                            idem_reqs, success, total, errs))
+                        f.write(report_builder.header)
+                        f.write(report_builder.newline)
+                        f.write(report_builder.divider)
+                        f.write(report_builder.newline * 2)
+                        f.write(report_builder.content)
                         f.close()
                     else:
                         click.echo(
                             click.style(
                                 'Error: output destination directory doesn\'t exist.',
                                 fg='red'))
+
     except Exception as e:
         click.echo(click.style(e, fg='red'))
 
 
-def generate_health_check_report(res) -> str:
-    s = f"Datetime: {datetime.now()}\nTotal APIs checked: {res['total']}\nSuccess: {res['success']}\nErrors: {res['errors']}\n\n\n"
-    for r in res['responses']:
-        s += f"{r['message']}\n{'-' * 50}\n"
-    return s
-
-
-def generate_idempotency_check_report(reqs: list[LogItem], success: int, total: int, errors: int) -> str:
-    s = f"Datetime: {datetime.now()}\nTotal APIs checked: {total}\nSuccess: {success}\nErrors: {errors}\n\n\n"
-    for r in reqs:
-        msg = f'Name: {r.name}\nError: {r.has_err}\nLatency: {r.run_time}s\n{r.message}'
-        s += f"{msg}\n{'-' * 50}\n"
-    return s
-
-
 def generate_file_name(type: str) -> str:
     return f'{type}_{time()}_{uuid.uuid4()}.log'
-
-
-def print_health_check_report(res) -> None:
-    click.echo('-' * 50)
-    for r in res['responses']:
-        if not r['error']:
-            click.echo(r['message'])
-        else:
-            click.echo(click.style(
-                r['message'], fg='red'))
-        print('\n')
-
-    click.echo('-' * 50)
-    click.echo(click.style(
-        f"Datetime: {datetime.now()}", fg='green'))
-    click.echo(click.style(
-        f"Total APIs checked: {res['total']}", fg='green'))
-    click.echo(click.style(
-        f"Success: {res['success']}", fg='green'))
-    click.echo(click.style(f"Errors: {res['errors']}", fg='red'))
-    click.echo(click.style(
-        f"Success rate: {calc_success_perentage(res):.2f}%", fg='green'))
-
-
-def calc_success_perentage(res) -> float:
-    return res['success'] / (res['success'] + res['errors']) * 100
-
-
-def print_idempotency_report(reqs: list[LogItem], success: int, total: int, errors: int) -> None:
-    click.echo('-' * 50)
-    for r in reqs:
-        msg = f'Name: {r.name}\nError: {r.has_err}\nLatency: {r.run_time}s\n{r.message}'
-        if not r.has_err:
-            click.echo(msg)
-        else:
-            click.echo(click.style(msg, fg='red'))
-        print('\n')
-
-    click.echo('-' * 50)
-    click.echo(click.style(
-        f"Datetime: {datetime.now()}", fg='green'))
-    click.echo(click.style(
-        f"Total APIs checked: {total}", fg='green'))
-    click.echo(click.style(
-        f"Success: {success}", fg='green'))
-    click.echo(click.style(f"Errors: {errors}", fg='red'))
-    click.echo(click.style(
-        f"Success rate: {success/total:.2f}%", fg='green'))
 
 
 if __name__ == '__main__':

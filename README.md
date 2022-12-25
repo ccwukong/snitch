@@ -3,9 +3,11 @@
 snitch is a CLI tool that helps you do health check, API contract validation and more for your microservices.
 
 There's no tendancies to replace your existing testing tools, but rather provides a convenient way to check your microservices on demand.
+
 ## Main features
-- Health check on every endpoint concurrently (using aiohttp)
-- API Contract validation
+
+- Running health check and contract validation concurrently (using coroutine)
+- Running Idempotency check synchronously, this wille be much slower than features run by coroutines(like health check)
 - More to come
 
 ## Installation

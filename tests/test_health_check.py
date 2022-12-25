@@ -44,7 +44,7 @@ class TestHealthCheck(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(res.has_err, False)
         self.assertEqual(res.name, 'Test API')
 
-    async def test_request_get(self):
+    async def test_request_post(self):
         with patch("aiohttp.ClientSession.post", new_callable=AsyncMock) as async_mock:
             self.request.method = 'POST'
             async_mock.return_value = self.response

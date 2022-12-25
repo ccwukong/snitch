@@ -3,7 +3,7 @@ import requests
 from ..logger import LogItem
 
 
-async def run_idempotency_check(req) -> LogItem:
+async def run_idempotency_check(req) -> dict:
     try:
         start = time()
         if req.method == 'GET':
@@ -45,7 +45,17 @@ async def run_idempotency_check(req) -> LogItem:
             is_idempotent = res1.text == res2.text
         end = time()
 
-        return LogItem(False, end - start, f'Idempotent: {is_idempotent}.', req.name)
+        log = LogItem(False, end - start,
+                      f'{is_idempotent}', req.name)
+        return {'error': log.has_err,
+                'message':
+                f'Name: {log.name}\nError: {log.has_err}\nLatency: {log.run_time}s\nIdempotent: {log.message}'}
+
     except Exception as e:
         end = time()
-        return LogItem(True, end - start, f'Error. Idempotency untestable.', req.name)
+        log = LogItem(True, end - start,
+                      f'Untestable', req.name)
+
+        return {'error': log.has_err,
+                'message':
+                f'Name: {log.name}\nError: {log.has_err}\nLatency: {log.run_time}s\nIdempotent: {log.message}'}
