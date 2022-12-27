@@ -30,7 +30,7 @@ snitch -p your_config_json_file_path [-o your_output_directory]
 ### Flags
 | flag      | Description |
 | ----------- | ----------- |
-| -i      | ***OPTIONAL*** Create a new config JSON template |
+| -i      | ***OPTIONAL*** Create a new config JSON file with default template |
 | --init   | same as -o        |
 | -p      | Your config JSON file path |
 | --path   | same as -p        |

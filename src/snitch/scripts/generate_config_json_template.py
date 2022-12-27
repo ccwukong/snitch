@@ -4,7 +4,6 @@ import json
 
 def generate_config_json_template(file: str) -> None:
     try:
-
         with open(file, 'w') as f:
             content = {"postmanCollection": {"version": "", "collectionFilePath": "", "metadata": {
             }, "header": {}}, "openApi": {"version": "", "filePath": "", "metadata": {}, "header": {}}}
