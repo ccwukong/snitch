@@ -2,7 +2,7 @@
 # snitch
 snitch is a CLI tool that helps you do health check, API contract validation and more for your microservices.
 
-There's no tendancies to replace your existing testing tools, but rather provides a convenient way to check your microservices on demand.
+This is not a replacement for your existing testing tools, but rather it provides a convenient way to check your APIs swiftly.
 
 ## Main features
 
@@ -30,6 +30,8 @@ snitch -p your_config_json_file_path [-o your_output_directory]
 ### Flags
 | flag      | Description |
 | ----------- | ----------- |
+| -i      | ***OPTIONAL*** Create a new config JSON template |
+| --init   | same as -o        |
 | -p      | Your config JSON file path |
 | --path   | same as -p        |
 | -o      | ***OPTIONAL*** Your output directory for storing the test results. It has to be a directory |
@@ -65,7 +67,15 @@ tox -e py310 -- ./tests
 
 snitch accepts 2 types of API contracts: Postman collection file version >= 2.1 or OpenAPI(Swagger) file version >= 3.0.0.
 
-First, you need to have a global .json file which provides all essential configurations in order to run the test. You can use this template:
+First, you need to have a global .json file which provides all essential configurations in order to run the test. 
+
+You can create it by running
+
+```console
+snitch -i path_to_store_the_config_json_file/your_json_file_name.json
+```
+
+Or, you can use this template:
 ```json
 {
   "postmanCollection": {
