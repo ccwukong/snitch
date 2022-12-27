@@ -12,7 +12,7 @@
   * [How this works](#how-this-works)
   * [Flags](#flags)
   * [Idempotency](#idempotency)
-  * [Development](#development)
+  * [How to contribute](#how-to-contribute)
     * [Create a Python 3 virtual environment](#create-a-python-3-virtual-environment)
     * [Run the program](#run-the-program)
     * [Run unit testing](#run-unit-testing)
@@ -139,7 +139,7 @@ Explanation from [https://www.restapitutorial.com/](https://www.restapitutorial.
 
 POST method usually is not idempotent, however, for applications such as online banking, digital payment etc. it is also important to keep POST method idempotent to avoid duplicated payments and transactions. It's subjected to application owners to decide whether or not idempotency is non-trival to certain APIs of their services, and snitch only simply check if same API with same parameteres returns same response or not.
 
-## Development
+## How to contribute
 
 ### Create a Python 3 virtual environment
 

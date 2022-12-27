@@ -12,11 +12,11 @@ from .scripts.generate_config_json_template import generate_config_json_template
 
 
 @click.command()
-@click.option('-i', '--init', help='Initiate a new config.json template file, you need to provide a directory to store your config file', default='')
-@click.option('-o', '--output', help='Store the results on your device', default='')
-@click.option('-p', '--path', help='Path of the configuration file')
-@click.option('-t', '--task', help='Run a specific task, snitch will run all tasks if this flag is not specified', default='')
-@click.option('-v', '--verbose', is_flag=True, help='Print API responses if -v or --verbose flag is specified')
+@click.option('-i', '--init', help='To initiate a new config.json template file, you need to provide a directory to store your config file', default='')
+@click.option('-o', '--output', help='To specify an existing directory that stores task results on your device', default='')
+@click.option('-p', '--path', help='To specify a path where stores the config JSON file')
+@click.option('-t', '--task', help='To run a specific task, snitch will run all tasks if this flag is not provided', default='')
+@click.option('-v', '--verbose', is_flag=True, help='To print API responses if -v or --verbose flag is provided')
 async def run(path, output, init, task, verbose):
     try:
         if init:
@@ -26,7 +26,7 @@ async def run(path, output, init, task, verbose):
                 raise Exception('Error. No -p or --path flag specified.')
             with open(path, 'r') as f:
                 click.echo(click.style(
-                    'Analyzing configuration ...\n', fg='yellow'))
+                    'Analyzing the configuration...\n', fg='yellow'))
                 config = ConfigParser(f.read())
                 reqs = []
 
@@ -83,7 +83,7 @@ async def run_health_task(output: str, reqs: list, verbose: bool):
         else:
             click.echo(
                 click.style(
-                    'Error: Output destination directory doesn\'t exist.',
+                    'Error: The output destination directory doesn\'t exist.',
                     fg='red'))
 
 
@@ -128,7 +128,7 @@ async def run_idempotency_task(output: str, reqs: list):
         else:
             click.echo(
                 click.style(
-                    'Error: Output destination directory doesn\'t exist.',
+                    'Error: The output destination directory doesn\'t exist.',
                     fg='red'))
 
 
