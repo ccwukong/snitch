@@ -95,7 +95,7 @@ tox -e py310 -- ./tests
 
 ## How does this work?
 
-snitch accepts 2 types of API contracts: Postman collection file version >= 2.1 or OpenAPI(Swagger) file version >= 3.0.0.
+snitch accepts 2 types of API contracts: Postman collection file version **>= 2.0** or OpenAPI(Swagger) file version **>= 3.0.0**.
 
 First, you need to have a global .json file which provides all essential configurations in order to run the test. 
 
@@ -130,3 +130,13 @@ Or, you can use this template:
   }
 }
 ```
+
+## Idempotency (definition by [https://www.restapitutorial.com/](https://www.restapitutorial.com/lessons/idempotency.html#:~:text=From%20a%20RESTful%20service%20standpoint,as%20making%20a%20single%20request.))
+
+From a RESTful service standpoint, for an operation (or service call) to be idempotent, clients can make that same call repeatedly while producing the same result. In other words, making multiple identical requests has the same effect as making a single request. Note that while idempotent operations produce the same result on the server (no side effects), the response itself may not be the same (e.g. a resource's state may change between requests).
+
+The PUT and DELETE methods are defined to be idempotent. However, there is a caveat on DELETE. The problem with DELETE, which if successful would normally return a 200 (OK) or 204 (No Content), will often return a 404 (Not Found) on subsequent calls, unless the service is configured to "mark" resources for deletion without actually deleting them. However, when the service actually deletes the resource, the next call will not find the resource to delete it and return a 404. However, the state on the server is the same after each DELETE call, but the response is different.
+
+GET, HEAD, OPTIONS and TRACE methods are defined as safe, meaning they are only intended for retrieving data. This makes them idempotent as well since multiple, identical requests will behave the same.
+
+POST method usually is not idempotent, however, for applications such as online banking, digital payment etc. it is also important to keep POST method idempotent to avoid duplicated payments, banking transactions and so on. It's subjected to the application owner to decide whether or not idempotency is non-trival to certain APIs of their services, and snitch only simply check if same API with same parameteres returns same response or not.
