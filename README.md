@@ -1,6 +1,24 @@
+# snitch
+
 ![logo](docs/logo.png)
 
-# snitch
+# Table of contents
+
+<!--ts-->
+  * [Introduction](#introduction)
+  * [Main features](#main-features)
+  * [Installation](#installation)
+  * [Use cases](#user-cases)
+  * [How does this work?](#how-does-this-work?)
+  * [Flags](#flags)
+  * [Idempotency](#idempotency)
+  * [Development](#development)
+    * [Create a Python 3 virtual environment](#create-a-python-3-virtual-environment)
+    * [Run the program](#run-the-program)
+    * [Run unit testing](#run-unit-testing)
+<!--te-->
+
+## Introduction
 
 snitch is a CLI tool that helps you do health check, API idempotency check and more for your APIs.
 
@@ -94,6 +112,8 @@ Or, you can use this template:
 
 ## Flags
 
+Available flags for snitch CLI commands.
+
 | flag      | Description |
 | ----------- | ----------- |
 | -i      | ***OPTIONAL*** Create a new config JSON file with default template |
@@ -121,7 +141,9 @@ POST method usually is not idempotent, however, for applications such as online 
 
 ## Development
 
-### Create a Python 3 virtual environment under **root** directory(NOT src/snitch/)
+### Create a Python 3 virtual environment
+
+Run the following commands under **root** directory(NOT src/snitch/)
 
 ```console
 python3 -m venv venv
