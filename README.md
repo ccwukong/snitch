@@ -9,7 +9,7 @@
   * [Main features](#main-features)
   * [Installation](#installation)
   * [Use cases](#user-cases)
-  * [How does this work?](#how-does-this-work?)
+  * [How this works](#how-this-works)
   * [Flags](#flags)
   * [Idempotency](#idempotency)
   * [Development](#development)
@@ -72,7 +72,7 @@ Senario 4: I want to run all tasks(API health check and API idempotency check) w
 snitch -p your_config_json_file_path -v
 ```
 
-## How does this work?
+## How this works
 
 snitch accepts 2 types of API contracts: Postman collection file version **>= 2.0** or OpenAPI(Swagger) file version **>= 3.0.0**.
 
