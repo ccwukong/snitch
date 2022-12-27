@@ -10,6 +10,26 @@ This is not a replacement for your existing testing tools, but rather it provide
 - Running Idempotency check by mixing synchronous requests and coroutines, this will be slightly slower than features run by coroutines merely(e.g. health check)
 - More to come
 
+### Examples
+
+Senario 1: I want to run all tasks(Health check, API contract check and API Idempotency check)
+
+```concole
+snitch -p your_config_json_file_path
+```
+
+Senario 2: I want to run the API Idempotency check task only
+
+```concole
+snitch -p your_config_json_file_path -t id
+```
+
+Senario 3: I don't have a configuration json file, and I want to create one named **config.json** using the default template and stored it in my current directory
+
+```concole
+snitch -i ./config.json
+```
+
 ## Installation
 
 Install snitch via pip. Make sure you have Python 3 installed on your machine.
@@ -31,11 +51,13 @@ snitch -p your_config_json_file_path [-o your_output_directory]
 | flag      | Description |
 | ----------- | ----------- |
 | -i      | ***OPTIONAL*** Create a new config JSON file with default template |
-| --init   | same as -o        |
+| --init   | same as -i        |
 | -p      | Your config JSON file path |
 | --path   | same as -p        |
 | -o      | ***OPTIONAL*** Your output directory for storing the test results. It has to be a directory |
 | --output   | same as -o        |
+| -t      | ***OPTIONAL*** There are 2 tasks available:<br /> - hc (API health and Contract check)<br /> - id (API idempotency check) |
+| --task   | same as -t        |
 
 ## Development
 
