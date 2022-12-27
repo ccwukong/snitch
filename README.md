@@ -30,7 +30,9 @@ This is not a replacement for your existing testing tools, but rather it provide
 - Running Idempotency check by mixing synchronous requests and coroutines, this will be slightly slower than features run by coroutines merely(e.g. health check)
 - More to come
 
-![demo](docs/demo.gif)
+<video id="myBGvid" autoplay muted loop>
+  <source src="your_link_MP4" type="video/mp4">
+</video>
 
 ## Installation
 
