@@ -1,18 +1,18 @@
 ![logo](docs/logo.png)
 # snitch
-snitch is a CLI tool that helps you do health check, API contract validation and more for your microservices.
+snitch is a CLI tool that helps you do health check, API idempotency check and more for your APIs.
 
 This is not a replacement for your existing testing tools, but rather it provides a convenient way to check your APIs swiftly.
 
 ## Main features
 
-- Running health check and contract validation concurrently (using coroutine)
+- Running health check concurrently (using coroutine)
 - Running Idempotency check by mixing synchronous requests and coroutines, this will be slightly slower than features run by coroutines merely(e.g. health check)
 - More to come
 
 ### Examples
 
-Senario 1: I want to run all tasks(Health check, API contract check and API Idempotency check)
+Senario 1: I want to run all tasks(API health check and API idempotency check)
 
 ```concole
 snitch -p your_config_json_file_path
@@ -56,7 +56,7 @@ snitch -p your_config_json_file_path [-o your_output_directory]
 | --path   | same as -p        |
 | -o      | ***OPTIONAL*** Your output directory for storing the test results. It has to be a directory |
 | --output   | same as -o        |
-| -t      | ***OPTIONAL*** There are 2 tasks available:<br /> - hc (API health and Contract check)<br /> - id (API idempotency check) |
+| -t      | ***OPTIONAL*** There are 2 tasks available:<br /> - hc (API health check)<br /> - id (API idempotency check) |
 | --task   | same as -t        |
 
 ## Development

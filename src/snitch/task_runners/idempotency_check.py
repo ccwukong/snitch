@@ -13,7 +13,6 @@ async def run_idempotency_check(req) -> dict:
             res2 = requests.get(req.url, headers=req.headers)
             if res2.status_code >= 400:
                 raise Exception()
-
             is_idempotent = res1.text == res2.text
         elif req.method == 'POST':
             res1 = requests.post(
