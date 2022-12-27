@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "api-snitch"
-version = "0.1.17"
+version = "0.1.20"
 authors = [
   { name="Chen Cheng", email="ccwukong@gmail.com" },
 ]

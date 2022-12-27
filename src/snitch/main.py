@@ -1,6 +1,7 @@
 import asyncclick as click
 import os
 from time import time
+from datetime import date
 import uuid
 from .parsers.postman_parser import PostmanCollectionParser
 from .parsers.openapi_parser import OpenApiParser
@@ -12,7 +13,7 @@ from .scripts.generate_config_json_template import generate_config_json_template
 
 
 @click.command()
-@click.option('-i', '--init', help='To initiate a new config.json template file, you need to provide a directory to store your config file', default='')
+@click.option('-i', '--init', help='To create a new config.json template file, you need to provide a directory to store your config file', default='')
 @click.option('-o', '--output', help='To specify an existing directory that stores task results on your device', default='')
 @click.option('-p', '--path', help='To specify a path where stores the config JSON file')
 @click.option('-t', '--task', help='To run a specific task, snitch will run all tasks if this flag is not provided', default='')
@@ -72,7 +73,7 @@ async def run_health_task(output: str, reqs: list, verbose: bool):
     if output:
         if os.path.exists(output):
             f = open(os.path.join(
-                output, generate_file_name('health_check_check')), 'w')
+                output, generate_file_name('health_check')), 'w')
 
             f.write(report_builder.header)
             f.write(report_builder.newline)
@@ -133,7 +134,7 @@ async def run_idempotency_task(output: str, reqs: list):
 
 
 def generate_file_name(type: str) -> str:
-    return f'{type}_{time()}_{uuid.uuid4()}.log'
+    return f'{type}_{date.today().strftime("%Y_%m_%d")}_{uuid.uuid4()}.log'
 
 
 if __name__ == '__main__':

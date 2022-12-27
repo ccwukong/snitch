@@ -12,7 +12,7 @@ class ReportBuilder:
 
     @property
     def header(self) -> str:
-        return f"Datetime: {datetime.now()}{self.newline}Total APIs checked: {self.__data['total']}{self.newline}Success: {self.__data['success']}{self.newline}Errors: {self.__data['errors']}"
+        return f"Datetime: {datetime.now()}{self.newline}Total APIs checked: {self.__data['total']}{self.newline}Success: {self.__data['success']}{self.newline}Errors: {self.__data['errors']}{self.newline}Success rate: {self.__data['success'] / self.__data['total'] * 100:.2f}%"
 
     @property
     def content(self) -> str:
@@ -56,4 +56,4 @@ class ReportBuilder:
             f"Success: {self.__data['success']}", fg='green'))
         click.echo(click.style(f"Errors: {self.__data['errors']}", fg='red'))
         click.echo(click.style(
-            f"Success rate: {self.__data['success']/self.__data['total']:.2f}%", fg='green'))
+            f"Success rate: {self.__data['success'] / self.__data['total'] * 100:.2f}%", fg='green'))
