@@ -138,7 +138,3 @@ Or, you can use this template:
   }
 }
 ```
-
-## TODO
-- Idempotency check
-- Improve exception handling
