@@ -24,10 +24,16 @@ class PostmanCollectionParser():
                         headers['content-type'] = 'application/json'
 
                     # replacing the placeholders in url
-                    for h in i['request']['url']['host']:
-                        if h in metadata:
-                            i['request']['url']['raw'] = i['request']['url']['raw'].replace(
-                                h, metadata[h])
+                    if type(i['request']['url']) == str:
+                        url_str = i['request']['url']
+                        for h in metadata:
+                            url_str = url_str.replace(h, metadata[h])
+                    else:
+                        url_str = i['request']['url']['raw']
+
+                        for h in i['request']['url']['host']:
+                            if h in metadata:
+                                url_str = url_str.replace(h, metadata[h])
 
                     # body payload could be malformatted
                     # TODO: support content-type other than application/json
@@ -43,7 +49,7 @@ class PostmanCollectionParser():
                         body = None
 
                     req = Request(
-                        i['request']['method'], i['request']['url']['raw'], headers, body, i['name'])
+                        i['request']['method'], url_str, headers, body, i['name'])
 
                     self.__requests.append(req)
         except JSONDecodeError as e:

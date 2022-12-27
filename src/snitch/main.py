@@ -33,6 +33,7 @@ async def run(path, output, init, task, verbose):
                 if config.has_postman_collection:
                     pp = PostmanCollectionParser(
                         config.collection_file_path, config.collection_metadata)
+
                     reqs.extend(pp.requests)
                     # run health check and API validation, and handle the result
 

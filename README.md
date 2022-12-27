@@ -116,10 +116,6 @@ Or, you can use this template:
       "{{accessToken}}": "the access token string",
       "{{apiKey}}": "api key string",
       ...
-    },
-    "header":{
-      "Authorization":"{{accessToken}}", // the placeholder string will be replaced by the metadata values automatically by the script
-      "x-api-key":"{{apiKey}}"
     }
   },
   "openApi": {
@@ -130,10 +126,6 @@ Or, you can use this template:
       "{{accessToken}}": "the access token string",
       "{{apiKey}}":"api key string",
       ...
-    },
-    "header":{
-      "Authorization":"{{accessToken}}",
-      "x-api-key":"{{apiKey}}"
     }
   }
 }
