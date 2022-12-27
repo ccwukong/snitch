@@ -109,7 +109,7 @@ Or, you can use this template:
 
 ## Idempotency
 
-Explanation by [https://www.restapitutorial.com/](https://www.restapitutorial.com/lessons/idempotency.html#:~:text=From%20a%20RESTful%20service%20standpoint,as%20making%20a%20single%20request.)
+Explanation from [https://www.restapitutorial.com/](https://www.restapitutorial.com/lessons/idempotency.html#:~:text=From%20a%20RESTful%20service%20standpoint,as%20making%20a%20single%20request.)
 
 > From a RESTful service standpoint, for an operation (or service call) to be idempotent, clients can make that same call repeatedly while producing the same result. In other words, making multiple identical requests has the same effect as making a single request. Note that while idempotent operations produce the same result on the server (no side effects), the response itself may not be the same (e.g. a resource's state may change between requests).
 
@@ -117,7 +117,7 @@ Explanation by [https://www.restapitutorial.com/](https://www.restapitutorial.co
 
 > GET, HEAD, OPTIONS and TRACE methods are defined as safe, meaning they are only intended for retrieving data. This makes them idempotent as well since multiple, identical requests will behave the same.
 
-POST method usually is not idempotent, however, for applications such as online banking, digital payment etc. it is also important to keep POST method idempotent to avoid duplicated payments, banking transactions and so on. It's subjected to the application owner to decide whether or not idempotency is non-trival to certain APIs of their services, and snitch only simply check if same API with same parameteres returns same response or not.
+POST method usually is not idempotent, however, for applications such as online banking, digital payment etc. it is also important to keep POST method idempotent to avoid duplicated payments and transactions. It's subjected to application owners to decide whether or not idempotency is non-trival to certain APIs of their services, and snitch only simply check if same API with same parameteres returns same response or not.
 
 ## Development
 
