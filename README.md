@@ -54,47 +54,6 @@ Senario 4: I want to run all tasks(API health check and API idempotency check) w
 snitch -p your_config_json_file_path -v
 ```
 
-## Flags
-
-| flag      | Description |
-| ----------- | ----------- |
-| -i      | ***OPTIONAL*** Create a new config JSON file with default template |
-| --init   | same as -i        |
-| -o      | ***OPTIONAL*** Your output directory for storing the test results. It has to be a directory |
-| --output   | same as -o        |
-| -p      | Your config JSON file path |
-| --path   | same as -p        |
-| -t      | ***OPTIONAL*** There are 2 tasks available:<br /> - hc (API health check)<br /> - id (API idempotency check) |
-| --task   | same as -t        |
-| -v      | ***OPTIONAL*** Print API responses if -v or --verbose flag is specified |
-| --verbose   | same as -v        |
-
-## Development
-
-### Create a Python 3 virtual environment under **root** directory(NOT src/snitch/)
-
-```console
-python3 -m venv venv
-
-source ./venv/bin/activate
-```
-
-### Run the program
-
-Run the following command under **root** directory(NOT src/snitch/) to avoid the relative import path issue.
-
-```console 
-python3 -m src.snitch.main -p your_config_json_file_path [-o your_output_directory]
-
-```
-
-### Run unit testing
-
-Run unit testing under **root** directory(NOT src/snitch/)
-```console
-tox -e py310 -- ./tests
-```
-
 ## How does this work?
 
 snitch accepts 2 types of API contracts: Postman collection file version **>= 2.0** or OpenAPI(Swagger) file version **>= 3.0.0**.
@@ -133,6 +92,21 @@ Or, you can use this template:
 }
 ```
 
+## Flags
+
+| flag      | Description |
+| ----------- | ----------- |
+| -i      | ***OPTIONAL*** Create a new config JSON file with default template |
+| --init   | same as -i        |
+| -o      | ***OPTIONAL*** Your output directory for storing the test results. It has to be a directory |
+| --output   | same as -o        |
+| -p      | Your config JSON file path |
+| --path   | same as -p        |
+| -t      | ***OPTIONAL*** There are 2 tasks available:<br /> - hc (API health check)<br /> - id (API idempotency check) |
+| --task   | same as -t        |
+| -v      | ***OPTIONAL*** Print API responses if -v or --verbose flag is specified |
+| --verbose   | same as -v        |
+
 ## Idempotency
 
 Explanation by [https://www.restapitutorial.com/](https://www.restapitutorial.com/lessons/idempotency.html#:~:text=From%20a%20RESTful%20service%20standpoint,as%20making%20a%20single%20request.)
@@ -144,3 +118,29 @@ Explanation by [https://www.restapitutorial.com/](https://www.restapitutorial.co
 > GET, HEAD, OPTIONS and TRACE methods are defined as safe, meaning they are only intended for retrieving data. This makes them idempotent as well since multiple, identical requests will behave the same.
 
 POST method usually is not idempotent, however, for applications such as online banking, digital payment etc. it is also important to keep POST method idempotent to avoid duplicated payments, banking transactions and so on. It's subjected to the application owner to decide whether or not idempotency is non-trival to certain APIs of their services, and snitch only simply check if same API with same parameteres returns same response or not.
+
+## Development
+
+### Create a Python 3 virtual environment under **root** directory(NOT src/snitch/)
+
+```console
+python3 -m venv venv
+
+source ./venv/bin/activate
+```
+
+### Run the program
+
+Run the following command under **root** directory(NOT src/snitch/) to avoid the relative import path issue.
+
+```console 
+python3 -m src.snitch.main -p your_config_json_file_path [-o your_output_directory]
+
+```
+
+### Run unit testing
+
+Run unit testing under **root** directory(NOT src/snitch/)
+```console
+tox -e py310 -- ./tests
+```
