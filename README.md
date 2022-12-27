@@ -7,8 +7,9 @@
 <!--ts-->
   * [Introduction](#introduction)
   * [Main features](#main-features)
+    * [Demo](#demo)
   * [Installation](#installation)
-  * [Use cases](#user-cases)
+  * [Use cases](#use-cases)
   * [How this works](#how-this-works)
   * [Flags](#flags)
   * [Idempotency](#idempotency)
@@ -30,9 +31,9 @@ This is not a replacement for your existing testing tools, but rather it provide
 - Running Idempotency check by mixing synchronous requests and coroutines, this will be slightly slower than features run by coroutines merely(e.g. health check)
 - More to come
 
-<video id="myBGvid" autoplay muted loop>
-  <source src="your_link_MP4" type="video/mp4">
-</video>
+### Demo
+
+A quick demo on YouTube https://www.youtube.com/watch?v=kWEWlbuvTJk
 
 ## Installation
 
