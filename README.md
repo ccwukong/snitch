@@ -30,9 +30,7 @@ This is not a replacement for your existing testing tools, but rather it provide
 - Running Idempotency check by mixing synchronous requests and coroutines, this will be slightly slower than features run by coroutines merely(e.g. health check)
 - More to come
 
-<video autoplay loop muted>
-  <source src="https://github.com/ccwukong/snitch/blob/main/docs/demo.mov" type="video/mp4">
-</video>
+![demo](docs/demo.gif)
 
 ## Installation
 
