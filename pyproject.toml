@@ -8,7 +8,7 @@ version = "0.1.20"
 authors = [
   { name="Chen Cheng", email="ccwukong@gmail.com" },
 ]
-description = "snitch is a CLI tool that helps you do health check, API contract validation and more for your microservices."
+description = "snitch is a CLI tool that helps you do health check, API idempotency check and more for your APIs."
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [

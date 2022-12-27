@@ -24,11 +24,15 @@ snitch is a CLI tool that helps you do health check, API idempotency check and m
 
 This is not a replacement for your existing testing tools, but rather it provides a convenient way to check your APIs swiftly.
 
+[![snitch CLI demo](http://img.youtube.com/vi/wsdEIg3FDPs/0.jpg)](http://www.youtube.com/watch?v=wsdEIg3FDPs)
+
 ## Main features
 
 - Running health check concurrently (using coroutine)
 - Running Idempotency check by mixing synchronous requests and coroutines, this will be slightly slower than features run by coroutines merely(e.g. health check)
 - More to come
+
+![logo](docs/demo.gif)
 
 ## Installation
 
