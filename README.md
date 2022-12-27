@@ -24,7 +24,7 @@ Senario 2: I want to run the API Idempotency check task only
 snitch -p your_config_json_file_path -t id
 ```
 
-Senario 3: I don't have a configuration json file, and I want to create one named **config.json** using the default template and stored it in my current directory
+Senario 3: I don't have a configuration json file, and I want to create one named **config.json** using the default template and stored it in my **current directory**
 
 ```concole
 snitch -i ./config.json
@@ -33,7 +33,7 @@ snitch -i ./config.json
 Senario 4: I want to run all tasks(API health check and API idempotency check) with all API responses printed.
 
 ```concole
-snitch -i ./config.json -v
+snitch -p your_config_json_file_path -v
 ```
 
 ## Installation
