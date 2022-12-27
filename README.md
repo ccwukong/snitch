@@ -31,7 +31,7 @@ This is not a replacement for your existing testing tools, but rather it provide
 - More to come
 
 <video autoplay loop muted>
-  <source src="docs/demo.mov" type="video/mp4">
+  <source src="https://github.com/ccwukong/snitch/blob/main/docs/demo.mov" type="video/mp4">
 </video>
 
 ## Installation
