@@ -18,11 +18,11 @@ from .scripts.generate_config_json_template import generate_config_json_template
 @click.option('-t', '--task', help='Run a specific task, snitch will run all tasks if this flag is not specified', default='')
 async def run(path, output, init, task):
     try:
-        if not path:
-            raise Exception('Error. No -p or --path flag specified.')
         if init:
             generate_config_json_template(init)
         else:
+            if not path:
+                raise Exception('Error. No -p or --path flag specified.')
             with open(path, 'r') as f:
                 click.echo(click.style(
                     'Analyzing configuration ...\n', fg='yellow'))
