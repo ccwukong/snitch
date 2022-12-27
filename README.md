@@ -1,5 +1,7 @@
 ![logo](docs/logo.png)
+
 # snitch
+
 snitch is a CLI tool that helps you do health check, API idempotency check and more for your APIs.
 
 This is not a replacement for your existing testing tools, but rather it provides a convenient way to check your APIs swiftly.
@@ -10,7 +12,23 @@ This is not a replacement for your existing testing tools, but rather it provide
 - Running Idempotency check by mixing synchronous requests and coroutines, this will be slightly slower than features run by coroutines merely(e.g. health check)
 - More to come
 
-### Examples
+## Installation
+
+Install snitch via pip. Make sure you have Python 3 installed on your machine.
+
+**❗CAUTION** The package name is **api-snitch** instead of **snitch**.
+
+```
+pip3 install api-snitch
+```
+
+Once you have the config JSON file ready, you can run this in your commandline prompt:
+
+```
+snitch -p your_config_json_file_path [-o your_output_directory]
+```
+
+### Use cases
 
 Senario 1: I want to run all tasks(API health check and API idempotency check)
 
@@ -36,24 +54,8 @@ Senario 4: I want to run all tasks(API health check and API idempotency check) w
 snitch -p your_config_json_file_path -v
 ```
 
-## Installation
+## Flags
 
-Install snitch via pip. Make sure you have Python 3 installed on your machine.
-
-**❗CAUTION** The package name is **api-snitch** instead of **snitch**.
-
-
-```
-pip3 install api-snitch
-```
-
-Once you have the config JSON file ready, you can run this in your commandline prompt:
-
-```
-snitch -p your_config_json_file_path [-o your_output_directory]
-```
-
-### Flags
 | flag      | Description |
 | ----------- | ----------- |
 | -i      | ***OPTIONAL*** Create a new config JSON file with default template |
@@ -131,12 +133,14 @@ Or, you can use this template:
 }
 ```
 
-## Idempotency (definition by [https://www.restapitutorial.com/](https://www.restapitutorial.com/lessons/idempotency.html#:~:text=From%20a%20RESTful%20service%20standpoint,as%20making%20a%20single%20request.))
+## Idempotency
 
-From a RESTful service standpoint, for an operation (or service call) to be idempotent, clients can make that same call repeatedly while producing the same result. In other words, making multiple identical requests has the same effect as making a single request. Note that while idempotent operations produce the same result on the server (no side effects), the response itself may not be the same (e.g. a resource's state may change between requests).
+Explanation by [https://www.restapitutorial.com/](https://www.restapitutorial.com/lessons/idempotency.html#:~:text=From%20a%20RESTful%20service%20standpoint,as%20making%20a%20single%20request.)
 
-The PUT and DELETE methods are defined to be idempotent. However, there is a caveat on DELETE. The problem with DELETE, which if successful would normally return a 200 (OK) or 204 (No Content), will often return a 404 (Not Found) on subsequent calls, unless the service is configured to "mark" resources for deletion without actually deleting them. However, when the service actually deletes the resource, the next call will not find the resource to delete it and return a 404. However, the state on the server is the same after each DELETE call, but the response is different.
+> From a RESTful service standpoint, for an operation (or service call) to be idempotent, clients can make that same call repeatedly while producing the same result. In other words, making multiple identical requests has the same effect as making a single request. Note that while idempotent operations produce the same result on the server (no side effects), the response itself may not be the same (e.g. a resource's state may change between requests).
 
-GET, HEAD, OPTIONS and TRACE methods are defined as safe, meaning they are only intended for retrieving data. This makes them idempotent as well since multiple, identical requests will behave the same.
+> The PUT and DELETE methods are defined to be idempotent. However, there is a caveat on DELETE. The problem with DELETE, which if successful would normally return a 200 (OK) or 204 (No Content), will often return a 404 (Not Found) on subsequent calls, unless the service is configured to "mark" resources for deletion without actually deleting them. However, when the service actually deletes the resource, the next call will not find the resource to delete it and return a 404. However, the state on the server is the same after each DELETE call, but the response is different.
+
+> GET, HEAD, OPTIONS and TRACE methods are defined as safe, meaning they are only intended for retrieving data. This makes them idempotent as well since multiple, identical requests will behave the same.
 
 POST method usually is not idempotent, however, for applications such as online banking, digital payment etc. it is also important to keep POST method idempotent to avoid duplicated payments, banking transactions and so on. It's subjected to the application owner to decide whether or not idempotency is non-trival to certain APIs of their services, and snitch only simply check if same API with same parameteres returns same response or not.
