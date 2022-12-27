@@ -5,7 +5,7 @@ from ..logger import LogItem
 from ..parsers.request_model import Request
 
 
-async def run_health_check(requests: list[Request]) -> dict:
+async def run_health_check(requests: list[Request], verbose: bool = False) -> dict:
     # create different tasks to send request asynchronousely using coroutine
     # to increase concurrency.
     # use aiohttp here, so no need to mix coroutines with the threading pool
@@ -19,7 +19,7 @@ async def run_health_check(requests: list[Request]) -> dict:
     status['responses'] = [
         {'error': i.has_err,
          'message':
-         f'Name: {i.name}\nError: {i.has_err}\nLatency: {i.run_time}s'}
+         f'Name: {i.name}\nError: {i.has_err}\nLatency: {i.run_time}s' + (f'\nResponse: {i.message}' if verbose else '')}
         for i in res]
 
     return status

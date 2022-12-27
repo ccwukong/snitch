@@ -12,11 +12,12 @@ from .scripts.generate_config_json_template import generate_config_json_template
 
 
 @click.command()
-@click.option('-p', '--path', help='Path of the configuration file')
-@click.option('-o', '--output', help='Store the results on your device', default='')
 @click.option('-i', '--init', help='Initiate a new config.json template file, you need to provide a directory to store your config file', default='')
+@click.option('-o', '--output', help='Store the results on your device', default='')
+@click.option('-p', '--path', help='Path of the configuration file')
 @click.option('-t', '--task', help='Run a specific task, snitch will run all tasks if this flag is not specified', default='')
-async def run(path, output, init, task):
+@click.option('-v', '--verbose', is_flag=True, help='Print API responses if -v or --verbose flag is specified')
+async def run(path, output, init, task, verbose):
     try:
         if init:
             generate_config_json_template(init)
@@ -43,11 +44,11 @@ async def run(path, output, init, task):
                 if reqs:
                     if task:
                         match task:
-                            case 'hc': await run_health_task(output, reqs)
+                            case 'hc': await run_health_task(output, reqs, verbose)
                             case 'id': await run_idempotency_task(output, reqs)
                             case _: raise Exception(f'Error. {task} is an invalid task flag.')
                     else:
-                        await run_health_task(output, reqs)
+                        await run_health_task(output, reqs, verbose)
                         await run_idempotency_task(output, reqs)
                 else:
                     raise Exception('Error. No APIs available to check.')
@@ -56,10 +57,10 @@ async def run(path, output, init, task):
         click.echo(click.style(e, fg='red'))
 
 
-async def run_health_task(output: str, reqs: list):
+async def run_health_task(output: str, reqs: list, verbose: bool):
     click.echo(click.style(
         'Running Health check ...', fg='yellow'))
-    res = await run_health_check(reqs)
+    res = await run_health_check(reqs, verbose)
     report_builder = ReportBuilder(res)
     report_builder.print_divider()
     report_builder.print_newline()

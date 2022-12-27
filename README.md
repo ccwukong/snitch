@@ -30,6 +30,12 @@ Senario 3: I don't have a configuration json file, and I want to create one name
 snitch -i ./config.json
 ```
 
+Senario 4: I want to run all tasks(API health check and API idempotency check) with all API responses printed.
+
+```concole
+snitch -i ./config.json -v
+```
+
 ## Installation
 
 Install snitch via pip. Make sure you have Python 3 installed on your machine.
@@ -52,12 +58,14 @@ snitch -p your_config_json_file_path [-o your_output_directory]
 | ----------- | ----------- |
 | -i      | ***OPTIONAL*** Create a new config JSON file with default template |
 | --init   | same as -i        |
-| -p      | Your config JSON file path |
-| --path   | same as -p        |
 | -o      | ***OPTIONAL*** Your output directory for storing the test results. It has to be a directory |
 | --output   | same as -o        |
+| -p      | Your config JSON file path |
+| --path   | same as -p        |
 | -t      | ***OPTIONAL*** There are 2 tasks available:<br /> - hc (API health check)<br /> - id (API idempotency check) |
 | --task   | same as -t        |
+| -v      | ***OPTIONAL*** Print API responses if -v or --verbose flag is specified |
+| --verbose   | same as -v        |
 
 ## Development
 
