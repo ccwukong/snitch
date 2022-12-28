@@ -35,7 +35,7 @@ This is not a replacement for your existing testing tools, but rather it provide
 
 A quick demo on YouTube https://www.youtube.com/watch?v=kWEWlbuvTJk.
 
-![Demo](https://i.imgur.com/72uU6Zl.gif)
+![Demo](docs/demo.gif)
 
 ## Installation
 
