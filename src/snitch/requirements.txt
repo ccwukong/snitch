@@ -4,4 +4,4 @@ tox
 coverage
 aiohttp
 pyyaml
-requests
+requests>=2.28.1

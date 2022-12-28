@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "api-snitch"
-version = "0.1.20"
+version = "0.1.27"
 authors = [
   { name="Chen Cheng", email="ccwukong@gmail.com" },
 ]
@@ -15,6 +15,15 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+]
+dependencies = [
+    "anyio",
+    "asyncclick",
+    "aiohttp",
+    "pyyaml",
+    "requests",
+    "urllib3",
+    "chardet"
 ]
 
 [project.urls]
