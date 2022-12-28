@@ -175,13 +175,12 @@ python3 -m src.snitch.main -p your_config_json_file_path [-o your_output_directo
 
 ```
 
-<<<<<<< HEAD
 **Step 5**: Push your branch and create a PR for review
-=======
-### Run unit testing
+
+Run unit testing
 
 Run unit testing under **root** directory(NOT src/snitch/)
 ```console
 tox -e py310 -- ./tests
 ```
->>>>>>> 0b5d7fa311291c7e20865c8009b04c486953e1aa
+
