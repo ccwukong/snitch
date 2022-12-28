@@ -46,6 +46,7 @@ async def run_idempotency_check(req) -> dict:
 
         log = LogItem(False, end - start,
                       f'{is_idempotent}', req.name)
+
         return {'error': log.has_err,
                 'message':
                 f'Name: {log.name}\nError: {log.has_err}\nLatency: {log.run_time}s\nIdempotent: {log.message}'}

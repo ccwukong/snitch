@@ -6,9 +6,6 @@ from ..parsers.request_model import Request
 
 
 async def run_health_check(requests: list[Request], verbose: bool = False) -> dict:
-    # create different tasks to send request asynchronousely using coroutine
-    # to increase concurrency.
-    # use aiohttp here, so no need to mix coroutines with the threading pool
     async with aiohttp.ClientSession() as s:
         res = await get_all_requests(s, requests)
 

@@ -1,6 +1,5 @@
 import asyncclick as click
 import os
-from time import time
 from datetime import date
 import uuid
 from .parsers.postman_parser import PostmanCollectionParser
@@ -10,6 +9,7 @@ from .task_runners.health_check import run_health_check
 from .task_runners.idempotency_check import run_idempotency_check
 from .task_runners.report_builder import ReportBuilder
 from .scripts.generate_config_json_template import generate_config_json_template
+from .task_runners.task import TaskType
 
 
 @click.command()
@@ -46,9 +46,9 @@ async def run(path, output, init, task, verbose):
                 if reqs:
                     if task:
                         match task:
-                            case 'hc': await run_health_task(output, reqs, verbose)
-                            case 'id': await run_idempotency_task(output, reqs)
-                            case _: raise Exception(f'Error. {task} is an invalid task flag.')
+                            case TaskType.HEALTH_CHECK.value: await run_health_task(output, reqs, verbose)
+                            case TaskType.IDEMPOTENCY_CHECK.value: await run_idempotency_task(output, reqs)
+                            case _: raise Exception(f'Error. \'{task}\' is an invalid task flag.')
                     else:
                         await run_health_task(output, reqs, verbose)
                         await run_idempotency_task(output, reqs)

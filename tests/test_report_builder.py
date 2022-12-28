@@ -17,7 +17,7 @@ class TestReportBuilder(unittest.TestCase):
         with patch("src.snitch.task_runners.report_builder.datetime") as mock:
             mock.now.return_value = 123
             self.assertEqual(self.report_builder.header,
-                             f"Datetime: 123{self.report_builder.newline}Total APIs checked: 100{self.report_builder.newline}Success: 50{self.report_builder.newline}Errors: 50")
+                             f"Datetime: 123{self.report_builder.newline}Total APIs checked: 100{self.report_builder.newline}Success: 50{self.report_builder.newline}Errors: 50{self.report_builder.newline}Success rate: 50.00%")
 
     def test_conetnt(self):
         self.assertEqual(self.report_builder.content,
