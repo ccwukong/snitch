@@ -159,8 +159,6 @@ source ./venv/bin/activate
 
 **Step 3**: Create a new branch, add your code and test cases, make sure nothing breaks
 
-Run unit testing
-
 Run unit testing under **root** directory(NOT src/snitch/)
 ```console
 tox -e py310 -- ./tests
@@ -176,9 +174,4 @@ python3 -m src.snitch.main -p your_config_json_file_path [-o your_output_directo
 ```
 
 **Step 5**: Push your branch and create a PR for review
-
-Run unit testing under **root** directory(NOT src/snitch/)
-```console
-tox -e py310 -- ./tests
-```
 
