@@ -30,8 +30,6 @@ This is not a replacement for your existing testing tools, but rather it provide
 
 ### Demo
 
-A quick demo on YouTube https://www.youtube.com/watch?v=kWEWlbuvTJk.
-
 ![Demo](docs/demo.gif)
 
 ## Installation
