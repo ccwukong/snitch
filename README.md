@@ -1,4 +1,4 @@
-# snitch
+# snitch <img src="https://img.shields.io/badge/Version-v0.1.27-green" /> <img src="https://img.shields.io/badge/Tested%20on-macOS%20Ventura-brightgreen" /> <img src="https://img.shields.io/badge/Tested%20on-Ubuntu%2022.10-brightgreen" />
 
 ![logo](docs/logo.png)
 
