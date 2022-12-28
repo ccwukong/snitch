@@ -9,7 +9,7 @@ from .task_runners.health_check import run_health_check
 from .task_runners.idempotency_check import run_idempotency_check
 from .task_runners.report_builder import ReportBuilder
 from .scripts.generate_config_json_template import generate_config_json_template
-from .task_runners.task import TaskType
+from .task_runners.task import TaskType, TaskQueue, Task
 
 
 @click.command()
@@ -44,14 +44,25 @@ async def run(path, output, init, task, verbose):
                     reqs.extend(op.requests)
 
                 if reqs:
+                    task_queue = TaskQueue()
                     if task:
                         match task:
-                            case TaskType.HEALTH_CHECK.value: await run_health_task(output, reqs, verbose)
-                            case TaskType.IDEMPOTENCY_CHECK.value: await run_idempotency_task(output, reqs)
+                            case TaskType.HEALTH_CHECK.value:
+                                task_queue.add_task(
+                                    Task(run_health_task, (output, reqs, verbose)))
+                            case TaskType.IDEMPOTENCY_CHECK.value:
+                                task_queue.add_task(
+                                    Task(run_idempotency_task, (output, reqs)))
                             case _: raise Exception(f'Error. \'{task}\' is an invalid task flag.')
                     else:
-                        await run_health_task(output, reqs, verbose)
-                        await run_idempotency_task(output, reqs)
+                        task_queue.add_task(
+                            Task(run_health_task, (output, reqs, verbose)))
+                        task_queue.add_task(
+                            Task(run_idempotency_task, (output, reqs)))
+
+                    while task_queue:
+                        t = task_queue.pop_task()
+                        await t.task(*t.args)
                 else:
                     raise Exception('Error. No APIs available to check.')
 
