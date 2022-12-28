@@ -14,9 +14,6 @@
   * [Flags](#flags)
   * [Idempotency](#idempotency)
   * [How to contribute](#how-to-contribute)
-    * [Create a Python 3 virtual environment](#create-a-python-3-virtual-environment)
-    * [Run the program](#run-the-program)
-    * [Run unit testing](#run-unit-testing)
 <!--te-->
 
 ## Introduction
@@ -148,7 +145,9 @@ POST method usually is not idempotent, however, for applications such as online 
 
 ## How to contribute
 
-### Create a Python 3 virtual environment
+**Step 1**: Clone this repo
+
+**Step 2**: Create a Python 3 virtual environment
 
 Run the following commands under **root** directory(NOT src/snitch/)
 
@@ -158,7 +157,16 @@ python3 -m venv venv
 source ./venv/bin/activate
 ```
 
-### Run the program
+**Step 3**: Create a new branch, add your code and test cases, make sure nothing breaks
+
+Run unit testing
+
+Run unit testing under **root** directory(NOT src/snitch/)
+```console
+tox -e py310 -- ./tests
+```
+
+**Step 4**: Test the program manually
 
 Run the following command under **root** directory(NOT src/snitch/) to avoid the relative import path issue.
 
@@ -167,9 +175,4 @@ python3 -m src.snitch.main -p your_config_json_file_path [-o your_output_directo
 
 ```
 
-### Run unit testing
-
-Run unit testing under **root** directory(NOT src/snitch/)
-```console
-tox -e py310 -- ./tests
-```
+**Step 5**: Push your branch and create a PR for review
