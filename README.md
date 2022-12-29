@@ -1,4 +1,4 @@
-# snitch <img src="https://img.shields.io/badge/Version-v0.1.27-green" /> <img src="https://img.shields.io/badge/Tested%20on-macOS%20Ventura-brightgreen" /> <img src="https://img.shields.io/badge/Tested%20on-Ubuntu%2022.10-brightgreen" />
+# snitch <img src="https://img.shields.io/badge/pypi-v0.1.28-green" /> <img src="https://img.shields.io/badge/Tested%20on-macOS%20Ventura-brightgreen" /> <img src="https://img.shields.io/badge/Tested%20on-Ubuntu%2022.10-brightgreen" />
 
 ![logo](docs/logo.png)
 
@@ -91,7 +91,7 @@ Or, you can use this template:
 {
   "postmanCollection": {
     "version": "2.1", 
-    "collectionFilePath": "absolute_path_to_the_postman_collection_json_file",
+    "filePath": "absolute_path_to_the_postman_collection_json_file",
     "metadata":{ // you can put all your placeholder strings here, for instance, the placeholder string for the host of the REST endpoints
       "{{restUrl}}": "https://your_api_domain",
       "{{accessToken}}": "the access token string",

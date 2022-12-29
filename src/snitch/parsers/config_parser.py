@@ -15,7 +15,7 @@ class ConfigParser:
                 if int(config['postmanCollection']['version'].split('.')[0]) < 2:
                     raise InvalidPostmanCollectionVersion(
                         'Error. snitch requires Postman collection version >= 2.0')
-                self.__postman_collection['collection_file_path'] = config['postmanCollection']['collectionFilePath']
+                self.__postman_collection['file_path'] = config['postmanCollection']['filePath']
                 self.__postman_collection['metadata'] = config['postmanCollection']['metadata']
 
             if 'openApi' in config:
@@ -37,7 +37,7 @@ class ConfigParser:
 
     @property
     def collection_file_path(self):
-        return self.__postman_collection.get('collection_file_path', None)
+        return self.__postman_collection.get('file_path', None)
 
     @property
     def has_openapi(self):

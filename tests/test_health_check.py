@@ -1,5 +1,5 @@
-from src.snitch.task_runners.health_check import run_health_check, request, get_all_requests
-from src.snitch.parsers.request_model import Request, RequestHeader
+from src.snitch.task_runners.health_check import run_health_check, request
+from src.snitch.parsers.request_model import Request
 from src.snitch.logger import LogItem
 import unittest
 import aiohttp

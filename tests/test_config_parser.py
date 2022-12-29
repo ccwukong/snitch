@@ -9,7 +9,7 @@ class TestConfigParser(unittest.TestCase):
         self.__data = '''{
             "postmanCollection": {
                 "version": "2.1",
-                "collectionFilePath": "absolute_path_to_the_postman_collection_json_file",
+                "filePath": "absolute_path_to_the_postman_collection_json_file",
                 "metadata": {
                     "{{restUrl}}": "https://your_api_domain",
                     "{{accessToken}}": "the access token string",
