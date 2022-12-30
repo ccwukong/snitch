@@ -4,7 +4,7 @@ from datetime import datetime
 
 class ReportBuilder:
     '''
-    ReportBuilder builds formatted report strings, it won't print anything on command line
+    ReportBuilder builds formatted report strings
     '''
 
     def __init__(self, data: dict):
