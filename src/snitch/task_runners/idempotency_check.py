@@ -1,9 +1,11 @@
 from time import time
 import requests
+from typing import Dict
+from ..parsers.request_model import Request
 from ..logger import LogItem
 
 
-async def run_idempotency_check(req) -> dict:
+async def run_idempotency_check(req: Request) -> Dict[str, str]:
     try:
         start = time()
         if req.method == 'GET':

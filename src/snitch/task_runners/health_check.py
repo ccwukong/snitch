@@ -1,11 +1,13 @@
 import aiohttp
 import asyncio
 from time import time
+from typing import Dict, List, Any
 from ..logger import LogItem
 from ..parsers.request_model import Request
+from ..typed import Session
 
 
-async def run_health_check(requests: list[Request], verbose: bool = False) -> dict:
+async def run_health_check(requests: List[Request], verbose: bool = False) -> Dict[str, Any]:
     async with aiohttp.ClientSession() as s:
         res = await get_all_requests(s, requests)
 
@@ -16,13 +18,14 @@ async def run_health_check(requests: list[Request], verbose: bool = False) -> di
     status['responses'] = [
         {'error': i.has_err,
          'message':
-         f'Name: {i.name}\nError: {i.has_err}\nLatency: {i.run_time}s' + (f'\nResponse: {i.message}' if verbose else '')}
+         f'Name: {i.name}\nError: {i.has_err}\nLatency: {i.run_time}s' +
+            (f'\nResponse: {i.message}' if verbose else '')}
         for i in res]
 
     return status
 
 
-async def request(session, request) -> LogItem:
+async def request(session: Session, request: Request) -> LogItem:
     try:
         start = time()
         if request.method == 'GET':
@@ -53,7 +56,7 @@ async def request(session, request) -> LogItem:
         return LogItem(True, end - start, e, request.name)
 
 
-async def get_all_requests(session, requests) -> list[LogItem]:
+async def get_all_requests(session: Session, requests: List[Request]) -> List[LogItem]:
     try:
         tasks = []
         for req in requests:
