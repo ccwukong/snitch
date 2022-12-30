@@ -147,7 +147,7 @@ POST method usually is not idempotent, however, for applications such as online 
 
 **Step 2**: Create a Python 3 virtual environment
 
-Run the following commands under **root** directory(NOT src/snitch/)
+Run the following commands under **root** directory(NOT snitch/)
 
 ```console
 python3 -m venv venv
@@ -157,17 +157,17 @@ source ./venv/bin/activate
 
 **Step 3**: Create a new branch, add your code and test cases, make sure nothing breaks
 
-Run unit testing under **root** directory(NOT src/snitch/)
+Run unit testing under **root** directory(NOT snitch/)
 ```console
 tox -e py310 -- ./tests
 ```
 
 **Step 4**: Test the program manually
 
-Run the following command under **root** directory(NOT src/snitch/) to avoid the relative import path issue.
+Run the following command under **root** directory(NOT snitch/) to avoid the relative import path issue.
 
 ```console 
-python3 -m src.snitch.main -p your_config_json_file_path [-o your_output_directory]
+python3 -m snitch.main -p your_config_json_file_path [-o your_output_directory]
 
 ```
 

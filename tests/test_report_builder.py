@@ -1,4 +1,4 @@
-from src.snitch.task_runners.report_builder import ReportBuilder
+from snitch.task_runners.report_builder import ReportBuilder
 import unittest
 from unittest.mock import patch
 
@@ -14,7 +14,7 @@ class TestReportBuilder(unittest.TestCase):
         self.report_builder = ReportBuilder(self.data)
 
     def test_header(self):
-        with patch("src.snitch.task_runners.report_builder.datetime") as mock:
+        with patch("snitch.task_runners.report_builder.datetime") as mock:
             mock.now.return_value = 123
             self.assertEqual(self.report_builder.header,
                              f"Datetime: 123{self.report_builder.newline}Total APIs checked: 100{self.report_builder.newline}Success: 50{self.report_builder.newline}Errors: 50{self.report_builder.newline}Success rate: 50.00%")

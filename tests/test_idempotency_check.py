@@ -1,6 +1,6 @@
-from src.snitch.task_runners.idempotency_check import run_idempotency_check
-from src.snitch.parsers.request_model import Request
-from src.snitch.logger import LogItem
+from snitch.task_runners.idempotency_check import run_idempotency_check
+from snitch.parsers.request_model import Request
+from snitch.logger import LogItem
 import unittest
 from unittest.mock import patch, Mock, MagicMock
 

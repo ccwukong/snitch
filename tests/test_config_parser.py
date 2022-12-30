@@ -1,5 +1,5 @@
-from src.snitch.parsers.config_parser import ConfigParser
-from src.snitch.parsers.parser_exceptions import InvalidPostmanCollectionVersion, InvalidOpenApiVersion
+from snitch.parsers.config_parser import ConfigParser
+from snitch.parsers.parser_exceptions import InvalidPostmanCollectionVersion, InvalidOpenApiVersion
 import unittest
 import json
 

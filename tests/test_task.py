@@ -1,4 +1,4 @@
-from src.snitch.task_runners.task import TaskType, Task, TaskQueue
+from snitch.task_runners.task import TaskType, Task, TaskQueue
 import unittest
 
 

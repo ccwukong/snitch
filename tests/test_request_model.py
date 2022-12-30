@@ -1,4 +1,4 @@
-from src.snitch.parsers.request_model import Request, RequestHeader
+from snitch.parsers.request_model import Request, RequestHeader
 import unittest
 
 

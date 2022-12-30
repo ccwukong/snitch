@@ -1,5 +1,5 @@
-from src.snitch.parsers.openapi_parser import OpenApiParser
-from src.snitch.parsers.request_model import Request
+from snitch.parsers.openapi_parser import OpenApiParser
+from snitch.parsers.request_model import Request
 import unittest
 from unittest.mock import patch, mock_open
 from yaml.parser import ParserError
