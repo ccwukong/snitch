@@ -1,15 +1,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Union
+from typing import Union, Dict
 
 
 @dataclass
 class Request:
     method: str
     url: str
-    headers: dict
-    body: dict = None
+    headers: Dict
+    body: Dict = None
     name: str = ''
 
 

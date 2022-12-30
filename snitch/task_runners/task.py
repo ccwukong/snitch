@@ -11,16 +11,16 @@ class TaskType(Enum):
 
 
 class TaskQueue:
-    def __init__(self):
+    def __init__(self) -> None:
         self.__queue = deque([])
 
-    def add_task(self, task: Task):
+    def add_task(self, task: Task) -> None:
         self.__queue.append(task)
 
     def pop_task(self) -> Task:
         return self.__queue.popleft()
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.__queue)
 
 

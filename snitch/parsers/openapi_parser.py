@@ -1,11 +1,12 @@
 import yaml
 import json
 from json.decoder import JSONDecodeError
+from typing import List, Dict
 from .request_model import Request, RequestHeader
 
 
 class OpenApiParser:
-    def __init__(self, path, metadata={}):
+    def __init__(self, path, metadata: Dict = {}) -> None:
         self.__requests = []
         self.__metadata = metadata
         try:
@@ -61,7 +62,7 @@ class OpenApiParser:
         elif 'delete' in obj:
             return 'DELETE'
 
-    def __extract_header_items(self, arr) -> list[dict[str, str]]:
+    def __extract_header_items(self, arr) -> List[Dict[str, str]]:
         headers = {}
         for p in arr:
             if p['in'] == 'header':

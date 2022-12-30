@@ -1,11 +1,12 @@
 import json
-from json.decoder import JSONDecodeError
+from typing import Union, Dict
 from .parser_exceptions import InvalidOpenApiVersion, InvalidPostmanCollectionVersion
+from ..typed import Number
 
 
 class ConfigParser:
     # It takes a json string as input during object instantiation
-    def __init__(self, data):
+    def __init__(self, data: str) -> None:
         self.__postman_collection = {}
         self.__openapi = {}
 
@@ -28,25 +29,25 @@ class ConfigParser:
             raise e
 
     @property
-    def has_postman_collection(self):
+    def has_postman_collection(self) -> bool:
         return True if self.__postman_collection else False
 
     @property
-    def collection_metadata(self):
+    def collection_metadata(self) -> Union[Dict[str, Union[str, Number]], None]:
         return self.__postman_collection.get('metadata', None)
 
     @property
-    def collection_file_path(self):
+    def collection_file_path(self) -> Union[str, None]:
         return self.__postman_collection.get('file_path', None)
 
     @property
-    def has_openapi(self):
+    def has_openapi(self) -> bool:
         return True if self.__openapi else False
 
     @property
-    def openapi_metadata(self):
+    def openapi_metadata(self) -> Union[Dict[str, Union[str, Number]], None]:
         return self.__openapi.get('metadata', None)
 
     @property
-    def openapi_file_path(self):
+    def openapi_file_path(self) -> Union[str, None]:
         return self.__openapi.get('file_path', None)

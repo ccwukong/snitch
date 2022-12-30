@@ -1,10 +1,11 @@
 import json
 from json.decoder import JSONDecodeError
+from typing import List
 from .request_model import Request, RequestHeader
 
 
 class PostmanCollectionParser():
-    def __init__(self, path, metadata={}):
+    def __init__(self, path, metadata={}) -> None:
         self.__requests = []
         try:
             with open(path, 'r') as f:
@@ -58,5 +59,5 @@ class PostmanCollectionParser():
             raise e
 
     @property
-    def requests(self):
+    def requests(self) -> List[Request]:
         return self.__requests

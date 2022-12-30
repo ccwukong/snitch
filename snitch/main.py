@@ -1,7 +1,8 @@
 import asyncclick as click
 import os
-from datetime import date
 import uuid
+from datetime import date
+from typing import List, Optional
 from .parsers.postman_parser import PostmanCollectionParser
 from .parsers.openapi_parser import OpenApiParser
 from .parsers.config_parser import ConfigParser
@@ -10,6 +11,7 @@ from .task_runners.idempotency_check import run_idempotency_check
 from .task_runners.report_builder import ReportBuilder
 from .scripts.generate_config_json_template import generate_config_json_template
 from .task_runners.task import TaskType, TaskQueue, Task
+from .parsers.request_model import Request
 
 
 @click.command()
@@ -18,7 +20,7 @@ from .task_runners.task import TaskType, TaskQueue, Task
 @click.option('-p', '--path', help='To specify a path where stores the config JSON file')
 @click.option('-t', '--task', help='To run a specific task, snitch will run all tasks if this flag is not provided', default='')
 @click.option('-v', '--verbose', is_flag=True, help='To print API responses if -v or --verbose flag is provided')
-async def run(path, output, init, task, verbose):
+async def run(path, output: Optional[str], init: Optional[str], task: Optional[str], verbose: Optional[bool]) -> None:
     try:
         if init:
             generate_config_json_template(init)
@@ -70,10 +72,10 @@ async def run(path, output, init, task, verbose):
         click.echo(click.style(e, fg='red'))
 
 
-async def run_health_task(output: str, reqs: list, verbose: bool):
+async def run_health_task(output: str, requests: List[Request], verbose: bool) -> None:
     click.echo(click.style(
         'Running Health check ...', fg='yellow'))
-    res = await run_health_check(reqs, verbose)
+    res = await run_health_check(requests, verbose)
     report_builder = ReportBuilder(res)
     report_builder.print_divider()
     report_builder.print_newline()
@@ -99,11 +101,11 @@ async def run_health_task(output: str, reqs: list, verbose: bool):
                     fg='red'))
 
 
-async def run_idempotency_task(output: str, reqs: list):
+async def run_idempotency_task(output: str, requests: List[Request]) -> None:
     click.echo(click.style(
-        '\nRunning Idempotency check, it will take longer time ...', fg='yellow'))
+        '\nRunning Idempotency check, it will take longer...', fg='yellow'))
     idem_responses = []
-    for re in reqs:
+    for re in requests:
         res = await run_idempotency_check(re)
         idem_responses.append(res)
 

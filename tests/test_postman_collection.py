@@ -1,5 +1,5 @@
-from src.snitch.parsers.postman_parser import PostmanCollectionParser
-from src.snitch.parsers.request_model import Request
+from snitch.parsers.postman_parser import PostmanCollectionParser
+from snitch.parsers.request_model import Request
 import unittest
 from unittest.mock import patch, mock_open
 from json.decoder import JSONDecodeError

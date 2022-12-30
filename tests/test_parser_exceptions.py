@@ -1,4 +1,4 @@
-from src.snitch.parsers.parser_exceptions import InvalidPostmanCollectionVersion, InvalidOpenApiVersion
+from snitch.parsers.parser_exceptions import InvalidPostmanCollectionVersion, InvalidOpenApiVersion
 import unittest
 
 
