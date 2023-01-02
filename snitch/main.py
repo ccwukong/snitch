@@ -1,4 +1,5 @@
 import asyncclick as click
+import asyncio
 import os
 import uuid
 from datetime import date
@@ -151,4 +152,4 @@ def generate_file_name(type: str) -> str:
 
 
 if __name__ == '__main__':
-    run()
+    asyncio.run(run())
