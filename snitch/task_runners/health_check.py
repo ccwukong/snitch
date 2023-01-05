@@ -26,6 +26,7 @@ async def run_health_check(requests: List[Request], verbose: bool = False) -> Di
 
 
 async def request(session: Session, request: Request) -> LogItem:
+    print(request)
     try:
         start = time()
         if request.method == 'GET':

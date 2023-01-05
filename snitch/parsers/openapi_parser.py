@@ -66,8 +66,8 @@ class OpenApiParser:
         headers = {}
         for p in arr:
             if p['in'] == 'header':
-                if p['example'] in self.__metadata:
-                    p['example'] = self.__metadata[p['example']]
+                for k, v in self.__metadata.items():
+                    p['example'] = p['example'].replace(k, v)
                 h = RequestHeader(p['name'].lower(), p['example'])
                 headers[h.key] = h.value
 

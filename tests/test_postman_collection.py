@@ -10,7 +10,7 @@ class TestPostmanCollectionParser(unittest.TestCase):
         self.data = '''{"info": {"_postman_id": "8d7c5957-b22d-40f1-a155-9116a1a92442","name": "test",
                             "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
                             "_exporter_id": "6670289"}, "item": [{"name": "Test endpoint","request": {"method": "GET","header":
-                            [{"key": "Authorization","type": "text","value": "{{accessToken}}"},{
+                            [{"key": "Authorization","type": "text","value": "Bearer {{accessToken}}"},{
                                 "key": "x-api-key","type": "text","value": "{{apiKey}}"}],
                                     "url": {"raw": "{{apiDomain}}/users?uid=123","host": ["{{apiDomain}}"],"path": ["users"],"query":
                                     [{"key": "uid","value": "123"}]}},"response": []}]}'''
@@ -21,6 +21,8 @@ class TestPostmanCollectionParser(unittest.TestCase):
 
         self.assertEqual(len(reqs.requests), 1)
         self.assertEqual(type(reqs.requests[0]), Request)
+        self.assertEqual(
+            reqs.requests[0].headers['authorization'], 'Bearer {{accessToken}}')
         self.assertEqual(reqs.requests[0].url, '{{apiDomain}}/users?uid=123')
 
     def test_PostmanCollectionParser_error(self):

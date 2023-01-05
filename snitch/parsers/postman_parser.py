@@ -17,8 +17,9 @@ class PostmanCollectionParser():
 
                     # edge case, item field in item
                     for h in i['request']['header']:
-                        if h['value'] in metadata:
-                            h['value'] = metadata[h['value']]
+                        for k, v in metadata.items():
+                            h['value'] = h['value'].replace(k, v)
+
                         hi = RequestHeader(
                             h['key'].lower(), h['value'])
                         headers[hi.key] = hi.value
