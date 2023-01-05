@@ -1,4 +1,4 @@
-# snitch <img src="https://img.shields.io/badge/pypi-v0.1.28-green" /> <img src="https://img.shields.io/badge/Tested%20on-macOS%20Ventura-brightgreen" /> <img src="https://img.shields.io/badge/Tested%20on-Ubuntu%2022.10-brightgreen" />
+# snitch <img src="https://img.shields.io/badge/pypi-v0.1.28-green" /> <img src="https://img.shields.io/badge/Tested%20on-macOS%20Ventura-brightgreen" /> <img src="https://img.shields.io/badge/Tested%20on-Ubuntu%2022.10-brightgreen" /> 
 
 ![logo](docs/logo.png)
 
@@ -27,6 +27,8 @@ This is not a replacement for your existing testing tools, but rather it provide
 - Running health check concurrently (using coroutine)
 - Running Idempotency check by mixing synchronous requests and coroutines, this will be slightly slower than features run by coroutines merely(e.g. health check)
 - More to come
+
+[CHANGELOG](CHANGELOG.md)
 
 ### Demo
 
