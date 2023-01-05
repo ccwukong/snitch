@@ -105,10 +105,6 @@ async def run_health_task(output: str, requests: List[Request], verbose: bool) -
 async def run_idempotency_task(output: str, requests: List[Request]) -> None:
     click.echo(click.style(
         '\nRunning Idempotency check, it will take longer...', fg='yellow'))
-    # idem_responses = []
-    # for re in requests:
-    #     res = await run_idempotency_check(re)
-    #     idem_responses.append(res)
 
     idem_responses = await run_all_idempotency_check(requests)
 

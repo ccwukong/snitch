@@ -65,7 +65,7 @@ def run_idempotency_check(request: Request) -> Dict[str, str]:
 
 
 async def run_all_idempotency_check(requests: List[Request]) -> List[Dict]:
-    loop = asyncio. get_event_loop()
+    loop = asyncio.get_event_loop()
 
     futures = []
     for r in requests:
