@@ -11,7 +11,6 @@ class PostmanCollectionParser():
             with open(path, 'r') as f:
                 data = json.loads(f.read())
                 items = self.__flatten_paths(data['item'])
-
                 for i in items:
                     # transform the header entries from list to dict
                     headers = {}
@@ -31,14 +30,21 @@ class PostmanCollectionParser():
                     # replacing the placeholders in url
                     if type(i['request']['url']) == str:
                         url_str = i['request']['url']
-                        for h in metadata:
-                            url_str = url_str.replace(h, metadata[h])
+
+                        if url_str:
+                            for h in metadata:
+                                url_str = url_str.replace(h, metadata[h])
+                        else:
+                            continue
                     else:
                         url_str = i['request']['url']['raw']
 
-                        for h in i['request']['url']['host']:
-                            if h in metadata:
-                                url_str = url_str.replace(h, metadata[h])
+                        if url_str:
+                            for h in i['request']['url']['host']:
+                                if h in metadata:
+                                    url_str = url_str.replace(h, metadata[h])
+                        else:
+                            continue
 
                     # body payload could be malformatted
                     # TODO: support content-type other than application/json
