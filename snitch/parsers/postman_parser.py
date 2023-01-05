@@ -33,17 +33,16 @@ class PostmanCollectionParser():
                         url_str = i['request']['url']
 
                         if url_str:
-                            for h in metadata:
-                                url_str = url_str.replace(h, metadata[h])
+                            for km, vm in metadata.items():
+                                url_str = url_str.replace(km, vm)
                         else:
                             continue
                     else:
                         url_str = i['request']['url']['raw']
 
                         if url_str:
-                            for h in i['request']['url']['host']:
-                                if h in metadata:
-                                    url_str = url_str.replace(h, metadata[h])
+                            for km, vm in metadata.items():
+                                url_str = url_str.replace(km, vm)
                         else:
                             continue
 

@@ -15,18 +15,18 @@ async def run_health_check(requests: List[Request], verbose: bool = False) -> Di
     status['total'] = len(res)
     status['errors'] = len([i for i in res if i.has_err])
     status['success'] = status['total'] - status['errors']
+
     status['responses'] = [
         {'error': i.has_err,
          'message':
          f'Name: {i.name}\nError: {i.has_err}\nLatency: {i.run_time}s' +
-            (f'\nResponse: {i.message}' if verbose else '')}
+            (f'\nRequest: {i.request}\nResponse: {i.message}' if verbose else '')}
         for i in res]
 
     return status
 
 
 async def request(session: Session, request: Request) -> LogItem:
-    print(request)
     try:
         start = time()
         if request.method == 'GET':
@@ -51,10 +51,10 @@ async def request(session: Session, request: Request) -> LogItem:
                 msg = await response.text()
         end = time()
 
-        return LogItem(False, end - start, msg, request.name)
+        return LogItem(False, end - start, msg, request.__dict__, request.name)
     except Exception as e:
         end = time()
-        return LogItem(True, end - start, e, request.name)
+        return LogItem(True, end - start, e, request.__dict__, request.name)
 
 
 async def get_all_requests(session: Session, requests: List[Request]) -> List[LogItem]:
