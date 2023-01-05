@@ -1,6 +1,6 @@
 import json
 from json.decoder import JSONDecodeError
-from typing import List
+from typing import List, Dict
 from .request_model import Request, RequestHeader
 
 
@@ -10,9 +10,13 @@ class PostmanCollectionParser():
         try:
             with open(path, 'r') as f:
                 data = json.loads(f.read())
-                for i in data['item']:
+                items = self.__flatten_paths(data['item'])
+
+                for i in items:
                     # transform the header entries from list to dict
                     headers = {}
+
+                    # edge case, item field in item
                     for h in i['request']['header']:
                         if h['value'] in metadata:
                             h['value'] = metadata[h['value']]
@@ -57,6 +61,22 @@ class PostmanCollectionParser():
             raise e  # TODO: handle this differently
         except FileNotFoundError as e:
             raise e
+
+    def __flatten_paths(self, paths: List[Dict]) -> List[Dict]:
+        items = []
+
+        def dfs(item) -> None:
+            if 'item' not in item:
+                items.append(item)
+                return
+
+            for i in item['item']:
+                dfs(i)
+
+        for p in paths:
+            dfs(p)
+
+        return items
 
     @property
     def requests(self) -> List[Request]:

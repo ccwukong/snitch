@@ -139,7 +139,7 @@ Explanation from [https://www.restapitutorial.com/](https://www.restapitutorial.
 
 > GET, HEAD, OPTIONS and TRACE methods are defined as safe, meaning they are only intended for retrieving data. This makes them idempotent as well since multiple, identical requests will behave the same.
 
-POST method usually is not idempotent, however, for applications such as online banking, digital payment etc. it is also important to keep POST method idempotent to avoid duplicated payments and transactions. It's subjected to application owners to decide whether or not idempotency is non-trival to certain APIs of their services, and snitch only simply check if same API with same parameteres returns same response or not.
+POST method usually is not idempotent, however, for applications such as online banking, digital payment etc. it is also important to keep POST method idempotent to avoid duplicated payments and transactions. It's subjected to application owners to decide whether or not idempotency is non-trival to certain POST endpoints of their services, and snitch only simply checks if same API with same parameteres returns same response or not.
 
 ## How to contribute
 
