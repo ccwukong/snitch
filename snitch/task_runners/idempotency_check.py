@@ -1,53 +1,54 @@
+import asyncio
 from time import time
 import requests
-from typing import Dict
+from typing import Dict, List
 from ..parsers.request_model import Request
 from ..logger import LogItem
 
 
-async def run_idempotency_check(req: Request) -> Dict[str, str]:
+def run_idempotency_check(request: Request) -> Dict[str, str]:
     try:
         start = time()
-        if req.method == 'GET':
-            res1 = requests.get(req.url, headers=req.headers)
+        if request.method == 'GET':
+            res1 = requests.get(request.url, headers=request.headers)
             if res1.status_code >= 400:
                 raise Exception()
-            res2 = requests.get(req.url, headers=req.headers)
+            res2 = requests.get(request.url, headers=request.headers)
             if res2.status_code >= 400:
                 raise Exception()
             is_idempotent = res1.text == res2.text
-        elif req.method == 'POST':
+        elif request.method == 'POST':
             res1 = requests.post(
-                req.url, headers=req.headers, json=req.body)
+                request.url, headers=request.headers, json=request.body)
             if res1.status_code >= 400:
                 raise Exception()
             res2 = requests.post(
-                req.url, headers=req.headers, json=req.body)
+                request.url, headers=request.headers, json=request.body)
             if res2.status_code >= 400:
                 raise Exception()
             is_idempotent = res1.text == res2.text
-        elif req.method == 'PUT':
+        elif request.method == 'PUT':
             res1 = requests.put(
-                req.url, headers=req.headers, json=req.body)
+                request.url, headers=request.headers, json=request.body)
             if res1.status_code >= 400:
                 raise Exception()
             res2 = requests.put(
-                req.url, headers=req.headers, json=req.body)
+                request.url, headers=request.headers, json=request.body)
             if res2.status_code >= 400:
                 raise Exception()
             is_idempotent = res1.text == res2.text
-        elif req.method == 'DELETE':
-            res1 = requests.delete(req.url, headers=req.headers)
+        elif request.method == 'DELETE':
+            res1 = requests.delete(request.url, headers=request.headers)
             if res1.status_code >= 400:
                 raise Exception()
-            res2 = requests.delete(req.url, headers=req.headers)
+            res2 = requests.delete(request.url, headers=request.headers)
             if res2.status_code >= 400:
                 raise Exception()
             is_idempotent = res1.text == res2.text
         end = time()
 
         log = LogItem(False, end - start,
-                      f'{is_idempotent}', req.name)
+                      f'{is_idempotent}', request.name)
 
         return {'error': log.has_err,
                 'message':
@@ -56,8 +57,18 @@ async def run_idempotency_check(req: Request) -> Dict[str, str]:
     except Exception as e:
         end = time()
         log = LogItem(True, end - start,
-                      f'Untestable', req.name)
+                      f'Untestable', request.name)
 
         return {'error': log.has_err,
                 'message':
                 f'Name: {log.name}\nError: {log.has_err}\nLatency: {log.run_time}s\nIdempotent: {log.message}'}
+
+
+async def run_all_idempotency_check(requests: List[Request]) -> List[Dict]:
+    loop = asyncio. get_event_loop()
+
+    futures = []
+    for r in requests:
+        futures.append(loop.run_in_executor(None, run_idempotency_check, r))
+
+    return await asyncio.gather(*futures)

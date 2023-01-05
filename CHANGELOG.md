@@ -1,3 +1,6 @@
+# v0.1.33 2023-01-05
+- Refactoring: added multithreading for synchronous requests by using exisiting event loop for idempotency check to improve performance
+
 # v0.1.32 2023-01-05
 - Fix: query string parsing
 - New: added Request info to verbose mode

@@ -8,7 +8,7 @@ from .parsers.postman_parser import PostmanCollectionParser
 from .parsers.openapi_parser import OpenApiParser
 from .parsers.config_parser import ConfigParser
 from .task_runners.health_check import run_health_check
-from .task_runners.idempotency_check import run_idempotency_check
+from .task_runners.idempotency_check import run_all_idempotency_check
 from .task_runners.report_builder import ReportBuilder
 from .scripts.generate_config_json_template import generate_config_json_template
 from .task_runners.task import TaskType, TaskQueue, Task
@@ -105,10 +105,12 @@ async def run_health_task(output: str, requests: List[Request], verbose: bool) -
 async def run_idempotency_task(output: str, requests: List[Request]) -> None:
     click.echo(click.style(
         '\nRunning Idempotency check, it will take longer...', fg='yellow'))
-    idem_responses = []
-    for re in requests:
-        res = await run_idempotency_check(re)
-        idem_responses.append(res)
+    # idem_responses = []
+    # for re in requests:
+    #     res = await run_idempotency_check(re)
+    #     idem_responses.append(res)
+
+    idem_responses = await run_all_idempotency_check(requests)
 
     res = {}
 
