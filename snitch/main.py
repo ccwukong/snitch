@@ -4,15 +4,15 @@ import os
 import uuid
 from datetime import date
 from typing import List, Optional
-from .parsers.postman_parser import PostmanCollectionParser
-from .parsers.openapi_parser import OpenApiParser
-from .parsers.config_parser import ConfigParser
-from .task_runners.health_check import run_health_check
-from .task_runners.idempotency_check import run_all_idempotency_check
-from .task_runners.report_builder import ReportBuilder
-from .scripts.generate_config_json_template import generate_config_json_template
-from .task_runners.task import TaskType, TaskQueue, Task
-from .parsers.request_model import Request
+from snitch.parsers.postman_parser import PostmanCollectionParser
+from snitch.parsers.openapi_parser import OpenApiParser
+from snitch.parsers.config_parser import ConfigParser
+from snitch.task_runners.health_check import run_health_check
+from snitch.task_runners.idempotency_check import run_all_idempotency_check
+from snitch.task_runners.report_builder import ReportBuilder
+from snitch.scripts.generate_config_json_template import generate_config_json_template
+from snitch.task_runners.task import TaskType, TaskQueue, Task
+from snitch.parsers.request_model import Request
 
 
 @click.command()

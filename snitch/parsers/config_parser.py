@@ -1,7 +1,7 @@
 import json
 from typing import Union, Dict
-from .parser_exceptions import InvalidOpenApiVersion, InvalidPostmanCollectionVersion
-from ..typed import Number
+from snitch.parsers.parser_exceptions import InvalidOpenApiVersion, InvalidPostmanCollectionVersion
+from snitch.typed import Number
 
 
 class ConfigParser:

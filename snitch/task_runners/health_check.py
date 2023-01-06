@@ -2,9 +2,9 @@ import aiohttp
 import asyncio
 from time import time
 from typing import Dict, List, Any
-from ..logger import LogItem
-from ..parsers.request_model import Request
-from ..typed import Session
+from snitch.logger import LogItem
+from snitch.parsers.request_model import Request
+from snitch.typed import Session
 
 
 async def run_health_check(requests: List[Request], verbose: bool = False) -> Dict[str, Any]:

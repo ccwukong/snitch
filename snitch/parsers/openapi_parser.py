@@ -2,7 +2,7 @@ import yaml
 import json
 from json.decoder import JSONDecodeError
 from typing import List, Dict
-from .request_model import Request, RequestHeader
+from snitch.parsers.request_model import Request, RequestHeader
 
 
 class OpenApiParser:

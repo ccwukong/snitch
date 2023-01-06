@@ -2,8 +2,8 @@ import asyncio
 from time import time
 import requests
 from typing import Dict, List
-from ..parsers.request_model import Request
-from ..logger import LogItem
+from snitch.parsers.request_model import Request
+from snitch.logger import LogItem
 
 
 def run_idempotency_check(request: Request) -> Dict[str, str]:
