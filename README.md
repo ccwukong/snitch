@@ -25,7 +25,7 @@ This is not a replacement for your existing testing tools, but rather it provide
 ## Main features
 
 - Running health check concurrently (using coroutine)
-- Running Idempotency check by mixing multithreading(for synchronous requests) and coroutines by using the same event loop. This will boost the overall performance for I/O concurrency
+- Running Idempotency check by mixing multithreading(for synchronous requests) and coroutines in the same event loop. This will improve I/O performance.
 - More to come
 
 [CHANGELOG](CHANGELOG.md)
