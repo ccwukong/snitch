@@ -55,13 +55,13 @@ async def run(path, output: Optional[str], init: Optional[str], task: Optional[s
                                     Task(run_health_task, (output, reqs, verbose)))
                             case TaskType.IDEMPOTENCY_CHECK.value:
                                 task_queue.add_task(
-                                    Task(run_idempotency_task, (output, reqs)))
+                                    Task(run_idempotency_task, (output, reqs, verbose)))
                             case _: raise Exception(f'Error. \'{task}\' is an invalid task flag.')
                     else:
                         task_queue.add_task(
                             Task(run_health_task, (output, reqs, verbose)))
                         task_queue.add_task(
-                            Task(run_idempotency_task, (output, reqs)))
+                            Task(run_idempotency_task, (output, reqs, verbose)))
 
                     while task_queue:
                         t = task_queue.pop_task()
@@ -102,11 +102,11 @@ async def run_health_task(output: str, requests: List[Request], verbose: bool) -
                     fg='red'))
 
 
-async def run_idempotency_task(output: str, requests: List[Request]) -> None:
+async def run_idempotency_task(output: str, requests: List[Request], verbose: bool) -> None:
     click.echo(click.style(
         '\nRunning Idempotency check, it will take longer...', fg='yellow'))
 
-    idem_responses = await run_all_idempotency_check(requests)
+    idem_responses = await run_all_idempotency_check(requests, verbose)
 
     res = {}
 
