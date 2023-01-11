@@ -1,3 +1,4 @@
+from __future__ import annotations
 import asyncclick as click
 import asyncio
 import os
@@ -15,12 +16,21 @@ from snitch.task_runners.task import TaskType, TaskQueue, Task
 from snitch.parsers.request_model import Request
 
 
+def print_version(ctx, param, value):
+    if not value or ctx.resilient_parsing:
+        return
+    click.echo('snitch v0.1.34')
+    ctx.exit()
+
+
 @click.command()
-@click.option('-i', '--init', help='To create a new config.json template file, you need to provide a directory to store your config file', default='')
-@click.option('-o', '--output', help='To specify an existing directory that stores task results on your device', default='')
-@click.option('-p', '--path', help='To specify a path where stores the config JSON file')
-@click.option('-t', '--task', help='To run a specific task, snitch will run all tasks if this flag is not provided', default='')
-@click.option('-v', '--verbose', is_flag=True, help='To print API responses if -v or --verbose flag is provided')
+@click.option('-i', '--init', help='Create a new configuration JSON file with default template, e.g. ~/your_path/config.json', default='')
+@click.option('-o', '--output', help='Specify a directory to save report files on your device', default='')
+@click.option('-p', '--path', help='The path where stores your configuration JSON file')
+@click.option('-t', '--task', help='Run a specific task if -t or --task is specified, otherwise, snitch will run all tasks ', default='')
+@click.option('-v', '--verbose', is_flag=True, help='Print API responses if -v or --verbose flag is provided')
+@click.option('--version', is_flag=True, help='Display the current version of snitch', callback=print_version,
+              expose_value=False, is_eager=True)
 async def run(path, output: Optional[str], init: Optional[str], task: Optional[str], verbose: Optional[bool]) -> None:
     try:
         if init:

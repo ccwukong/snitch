@@ -1,6 +1,7 @@
 import asyncclick as click
 from datetime import datetime
 from typing import Dict
+from functools import cached_property
 
 
 class ReportBuilder:
@@ -31,7 +32,7 @@ class ReportBuilder:
     def newline(self) -> str:
         return '\n'
 
-    @property
+    @cached_property
     def divider(self) -> str:
         return f"{'-' * 50}"
 

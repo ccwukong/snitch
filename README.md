@@ -1,4 +1,4 @@
-# snitch <img src="https://img.shields.io/badge/pypi-v0.1.33-green" /> <img src="https://img.shields.io/badge/Tested%20on-macOS%20Ventura-brightgreen" /> <img src="https://img.shields.io/badge/Tested%20on-Ubuntu%2022.10-brightgreen" /> 
+# snitch <img src="https://img.shields.io/badge/pypi-v0.1.34-green" /> <img src="https://img.shields.io/badge/Tested%20on-macOS%20Ventura-brightgreen" /> <img src="https://img.shields.io/badge/Tested%20on-Ubuntu%2022.10-brightgreen" /> 
 
 ![logo](docs/logo.png)
 
@@ -130,6 +130,7 @@ Available flags for snitch CLI commands.
 | --task   | same as -t        |
 | -v      | ***OPTIONAL*** Print API responses if -v or --verbose flag is specified |
 | --verbose   | same as -v        |
+| --version   | Display the current version of snitch   |
 
 ## Idempotency
 

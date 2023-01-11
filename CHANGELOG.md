@@ -1,3 +1,6 @@
+# v0.1.34 2023-01-11
+- Added verbose mode to idempotency check, updated the command line help msg and other minor fixes
+
 # v0.1.33 2023-01-05
 - Refactoring: added multithreading for synchronous requests by using exisiting event loop for idempotency check to improve performance
 
