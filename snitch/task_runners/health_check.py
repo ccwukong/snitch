@@ -29,16 +29,21 @@ async def run_health_check(requests: List[Request], verbose: bool = False) -> Di
 async def request(session: Session, request: Request) -> LogItem:
     try:
         start = time()
+        response = None
         if request.method == 'GET':
-            response = session.get(request.url, headers=request.headers)
+            async with session.get(request.url, headers=request.headers) as r:
+                response = r
         elif request.method == 'POST':
-            response = session.post(
-                request.url, headers=request.headers, json=request.body)
+            async with session.post(
+                    request.url, headers=request.headers, json=request.body) as r:
+                response = r
         elif request.method == 'PUT':
-            response = session.put(
-                request.url, headers=request.headers, json=request.body)
+            async with session.put(
+                    request.url, headers=request.headers, json=request.body) as r:
+                response = r
         elif request.method == 'DELETE':
-            response = session.delete(request.url, headers=request.headers)
+            async with session.delete(request.url, headers=request.headers) as r:
+                response = r
 
         if response.status >= 400:
             raise Exception(f'{response.status} - {response.content}')
