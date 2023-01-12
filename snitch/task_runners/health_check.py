@@ -30,25 +30,19 @@ async def request(session: Session, request: Request) -> LogItem:
     try:
         start = time()
         if request.method == 'GET':
-            async with session.get(request.url, headers=request.headers) as response:
-                if response.status >= 400:
-                    raise Exception(f'{response.status} - {response.content}')
-                msg = await response.text()
+            response = session.get(request.url, headers=request.headers)
         elif request.method == 'POST':
-            async with session.post(request.url, headers=request.headers, json=request.body) as response:
-                if response.status >= 400:
-                    raise Exception(f'{response.status} - {response.content}')
-                msg = await response.text()
+            response = session.post(
+                request.url, headers=request.headers, json=request.body)
         elif request.method == 'PUT':
-            async with session.put(request.url, headers=request.headers, json=request.body) as response:
-                if response.status >= 400:
-                    raise Exception(f'{response.status} - {response.content}')
-                msg = await response.text()
+            response = session.put(
+                request.url, headers=request.headers, json=request.body)
         elif request.method == 'DELETE':
-            async with session.delete(request.url, headers=request.headers) as response:
-                if response.status >= 400:
-                    raise Exception(f'{response.status} - {response.content}')
-                msg = await response.text()
+            response = session.delete(request.url, headers=request.headers)
+
+        if response.status >= 400:
+            raise Exception(f'{response.status} - {response.content}')
+        msg = await response.text()
         end = time()
 
         return LogItem(False, end - start, msg, request.__dict__, request.name)

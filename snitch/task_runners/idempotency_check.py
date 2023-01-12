@@ -9,7 +9,6 @@ from snitch.logger import LogItem
 def run_idempotency_check(request: Request, verbose: bool = False) -> Dict[str, str]:
     try:
         start = time()
-        has_err = False
         if request.method == 'GET':
             res1 = requests.get(request.url, headers=request.headers)
             res2 = requests.get(request.url, headers=request.headers)
